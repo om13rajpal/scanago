@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanago/dashboard.dart';
 import 'package:scanago/login.dart';
 
 void main() {
@@ -13,10 +14,9 @@ class Scanago extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFFF8F4EA),
-        visualDensity: VisualDensity.adaptivePlatformDensity
-      ),
-      home: const Login(),
+          primaryColor: const Color(0xFFF8F4EA),
+          visualDensity: VisualDensity.adaptivePlatformDensity),
+      home: const Dashboard(),
     );
   }
 }
