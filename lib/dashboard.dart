@@ -14,15 +14,19 @@ class Dashboard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.15,
-              color: Colors.blue,
+              height: MediaQuery.of(context).size.height * 0.20,
               child: const Center(
-                child: Text('Scanago'),
+                child: Text(
+                  'Scanago',
+                  style: TextStyle(
+                      fontFamily: 'monkey',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.65,
-              color: Colors.amber,
+              height: MediaQuery.of(context).size.height * 0.60,
               child: Stack(
                 children: [
                   Container(
@@ -38,25 +42,85 @@ class Dashboard extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 40.0, left: 20, bottom: 40),
+                        const EdgeInsets.only(top: 50, left: 30, bottom: 80),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: 60,
-                          color: Colors.black,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(13),
+                              color: const Color.fromARGB(215, 0, 0, 0)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.local_activity,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              Text(
+                                'Local Entry',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'monkey',
+                                    fontSize: 15),
+                              )
+                            ],
+                          ),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: 60,
-                          color: Colors.black,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(13),
+                              color: const Color.fromARGB(215, 0, 0, 0)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Home Entry',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'monkey',
+                                    fontSize: 15),
+                              ),
+                              Icon(
+                                Icons.home_rounded,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                            ],
+                          ),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: 60,
-                          color: Colors.black,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(13),
+                              color: const Color.fromARGB(215, 0, 0, 0)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.do_not_disturb_on_rounded,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              Text(
+                                'Night Entry',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'monkey',
+                                    fontSize: 15),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
