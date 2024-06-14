@@ -13,7 +13,7 @@ class Dashboard extends StatelessWidget {
         color: const Color(0xFFF8F4EA),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
               child: const Center(
                 child: Text(
@@ -25,7 +25,7 @@ class Dashboard extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.60,
               child: Stack(
                 children: [

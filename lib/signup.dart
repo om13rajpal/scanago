@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
-import 'package:scanago/signup.dart';
+import 'package:scanago/login.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,15 +93,14 @@ class Login extends StatelessWidget {
                           children: [
                             SizedBox(
                               height: 35,
-                              width: 91,
+                              width: 110,
                               child: Button(
-                                  text: 'Login',
+                                  text: 'SignUp',
                                   onPressed: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Dashboard(),
+                                          builder: (context) => const Dashboard(),
                                         ));
                                   },
                                   radius: 20,
@@ -113,7 +112,7 @@ class Login extends StatelessWidget {
                             Row(
                               children: [
                                 const Text(
-                                  'New to this app?',
+                                  'Already a user?',
                                   style: TextStyle(fontFamily: 'monkey '),
                                 ),
                                 const SizedBox(
@@ -124,11 +123,11 @@ class Login extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const SignUp(),
+                                          builder: (context) => const Login(),
                                         ));
                                   },
                                   child: const Text(
-                                    'Sign up',
+                                    'Login',
                                     style: TextStyle(
                                         fontFamily: 'monkey',
                                         fontWeight: FontWeight.bold,
