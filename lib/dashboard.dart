@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class Dashboard extends StatefulWidget {
+  final dynamic token;
+  const Dashboard({super.key, @required this.token});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  @override
+  void initState() {
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(widget.token);
+    print(decodedToken['email']);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
