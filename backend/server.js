@@ -7,6 +7,8 @@ const route = require("express").Router();
 const zod = require("zod");
 const dotenv = require("dotenv");
 const { connectMongo } = require("./db/db");
+const {authRoute} = require("./routes/auth");
+const auth = require("./routes/auth");
 
 const result = dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -19,7 +21,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use("/", route);
+app.use(authRoute)
 
 connectMongo();
 

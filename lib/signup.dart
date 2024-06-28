@@ -1,10 +1,58 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  late SharedPreferences prefs;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  @override
+  void initState() {
+    initSharedPrefs();
+    super.initState();
+  }
+
+  void initSharedPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  void registerUser(BuildContext context) async {
+    if (email.text.isNotEmpty && password.text.isNotEmpty) {
+      var body = {
+        "email": email.text.trim(),
+        "password": password.text.trim(),
+      };
+
+      var response = await http.post(
+          Uri.parse('http://localhost:3000/register'),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(body));
+      var jsonRes = jsonDecode(response.body);
+      if (jsonRes['status']) {
+        var myToken = jsonRes['token'];
+        await prefs.setString("token", myToken);
+        if (!context.mounted) return;
+
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Dashboard(),
+            ));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +97,7 @@ class SignUp extends StatelessWidget {
                               fontFamily: 'monkey', fontSize: 30, height: 1.2),
                         ),
                         TextField(
+                          controller: email,
                           decoration: InputDecoration(
                             labelText: 'Email',
                             prefixIcon: const Icon(
@@ -69,6 +118,7 @@ class SignUp extends StatelessWidget {
                           style: const TextStyle(color: Colors.white),
                         ),
                         TextField(
+                          controller: password,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             prefixIcon: const Icon(
@@ -97,11 +147,7 @@ class SignUp extends StatelessWidget {
                               child: Button(
                                   text: 'SignUp',
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const Dashboard(),
-                                        ));
+                                    registerUser(context);
                                   },
                                   radius: 20,
                                   fontSize: 15),
