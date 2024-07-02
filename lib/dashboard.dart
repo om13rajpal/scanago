@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class Dashboard extends StatefulWidget {
@@ -10,10 +13,25 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  late String email;
+  late String name;
+  late String rollNo;
+  late String phoneNo;
+  late String room;
+  late String branch;
+  late DateTime now;
+
   @override
   void initState() {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(widget.token);
-    print(decodedToken['email']);
+    email = decodedToken['email'];
+    name = decodedToken['name'];
+    rollNo = decodedToken['rollNo'];
+    phoneNo = decodedToken['phoneNo'];
+    room = decodedToken['room'];
+    branch = decodedToken['branch'];
+    now = DateTime.now();
+
     super.initState();
   }
 
@@ -67,23 +85,52 @@ class _DashboardState extends State<Dashboard> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(13),
                               color: const Color.fromARGB(215, 0, 0, 0)),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.local_activity,
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                              Text(
-                                'Local Entry',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'monkey',
-                                    fontSize: 15),
-                              )
-                            ],
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.45,
+                                    child: Center(
+                                      child: QrImageView(
+                                        data: jsonEncode({
+                                          "name": name,
+                                          "rollNo": rollNo,
+                                          "email": email,
+                                          "phoneNo": phoneNo,
+                                          "room": room,
+                                          "branch": branch,
+                                          "dateNtime": now.toIso8601String()
+                                        }),
+                                        version: QrVersions.auto,
+                                        size: 200,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.local_activity,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
+                                Text(
+                                  'Local Entry',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'monkey',
+                                      fontSize: 15),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Container(
@@ -92,23 +139,52 @@ class _DashboardState extends State<Dashboard> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(13),
                               color: const Color.fromARGB(215, 0, 0, 0)),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Home Entry',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'monkey',
-                                    fontSize: 15),
-                              ),
-                              Icon(
-                                Icons.home_rounded,
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                            ],
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.45,
+                                    child: Center(
+                                      child: QrImageView(
+                                        data: jsonEncode({
+                                          "name": name,
+                                          "rollNo": rollNo,
+                                          "email": email,
+                                          "phoneNo": phoneNo,
+                                          "room": room,
+                                          "branch": branch,
+                                          "dateNtime": now.toIso8601String()
+                                        }),
+                                        version: QrVersions.auto,
+                                        size: 200,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Home Entry',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'monkey',
+                                      fontSize: 15),
+                                ),
+                                Icon(
+                                  Icons.home_rounded,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Container(
@@ -117,23 +193,52 @@ class _DashboardState extends State<Dashboard> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(13),
                               color: const Color.fromARGB(215, 0, 0, 0)),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.do_not_disturb_on_rounded,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              Text(
-                                'Night Entry',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'monkey',
-                                    fontSize: 15),
-                              )
-                            ],
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.45,
+                                    child: Center(
+                                      child: QrImageView(
+                                        data: jsonEncode({
+                                          "name": name,
+                                          "rollNo": rollNo,
+                                          "email": email,
+                                          "phoneNo": phoneNo,
+                                          "room": room,
+                                          "branch": branch,
+                                          "dateNtime": now.toIso8601String()
+                                        }),
+                                        version: QrVersions.auto,
+                                        size: 200,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.do_not_disturb_on_rounded,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                Text(
+                                  'Night Entry',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'monkey',
+                                      fontSize: 15),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],

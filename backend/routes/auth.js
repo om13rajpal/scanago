@@ -70,6 +70,8 @@ async function login(req, res, next) {
             name: user.name,
             rollNo: user.rollNo,
             branch: user.branch,
+            phoneNo: user.phoneNo,
+            room: user.room
           };
           const token = generateToken(tokenData, secretKey, "1h");
 
