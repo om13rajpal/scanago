@@ -6,14 +6,51 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+
   password: {
     type: String,
     required: true,
   },
+
+  phoneNo: {
+    type: String,
+    default: "8950291327",
+  },
+
+  rollNo: {
+    type: String,
+    default: "102316071",
+  },
+
+  name: {
+    type: String,
+    default: "Om Rajpal",
+  },
+
+  branch: {
+    type: String,
+    default: "CSE",
+  },
+
+  room: {
+    type: String,
+    default: "120",
+  },
+
+  homeEntry: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Home",
+  }],
+  
+  localEntry: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "local",
+  }],
+
 });
 
 const userModel = mongoose.model("user", userSchema);
 
 module.exports = {
-    userModel
-}
+  userModel,
+};

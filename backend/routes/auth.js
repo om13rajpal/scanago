@@ -2,12 +2,12 @@ const route = require("express").Router();
 const bcrypt = require("bcrypt");
 const { validateInput } = require("../utils/zod");
 const { generateToken } = require("../utils/jwt");
-const {userModel} = require("../models/user")
+const { userModel } = require("../models/user");
 const path = require("path");
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
-const secretKey = process.env.SECRET_KEY || "lol"
+const secretKey = process.env.SECRET_KEY || "lol";
 
 async function registerUser(email, password) {
   try {
@@ -64,7 +64,13 @@ async function login(req, res, next) {
       const user = await findUser(data.email);
       if (user) {
         if (await bcrypt.compare(data.password, user.password)) {
-          const tokenData = { _id: user.id, email: user.email };
+          const tokenData = {
+            _id: user.id,
+            email: user.email,
+            name: user.name,
+            rollNo: user.rollNo,
+            branch: user.branch,
+          };
           const token = generateToken(tokenData, secretKey, "1h");
 
           res.json({ status: true, token: token });
@@ -86,5 +92,5 @@ route.post("/register", register);
 route.post("/login", login);
 
 module.exports = {
-  authRoute: route
-}
+  authRoute: route,
+};
