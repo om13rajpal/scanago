@@ -27,7 +27,6 @@ const localEntrySchema = new mongoose.Schema({
   },
   dateNtime: {
     type: Date,
-    required: true,
   },
 });
 

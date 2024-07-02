@@ -32,7 +32,7 @@ async function saveHomeEntry(req, res, next) {
     return;
   }
 
-  const updateUser = userModel.findOneAndUpdate(
+  const updateUser = await userModel.findOneAndUpdate(
     { email },
     {
       $push: { homeEntry: successRes._id },
@@ -48,10 +48,57 @@ async function saveHomeEntry(req, res, next) {
     });
     return;
   }
-  res.json({ status: true, message: "data saved" });
+  res.json({ status: true, message: "home entry saved" });
+}
+
+async function saveLocalEntry(req, res, next) {
+  const { name, rollNo, email, phoneNo, room, branch, dateNtime } = req.body;
+  const newEntry = await localEntryModel({
+    name,
+    rollNo,
+    email,
+    phoneNo,
+    room,
+    branch,
+    dateNtime,
+  });
+  if (!newEntry) {
+    res
+      .status(500)
+      .json({ status: false, message: "some error occured while making" });
+    return;
+  }
+
+  const saveEntry = await newEntry.save();
+  if (!saveEntry) {
+    res
+      .status(500)
+      .json({ status: false, message: "some error occured while saving" });
+  }
+
+  const updateUser = await userModel.findOneAndUpdate(
+    {
+      email,
+    },
+    {
+      $push: { localEntry: saveEntry._id },
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!updateUser) {
+    res
+      .status(500)
+      .json({ status: false, message: "unable to update user entry" });
+  }
+
+  res.json({ status: true, message: "local entry saved" });
 }
 
 entryRouter.post("/homeEntry", saveHomeEntry);
+entryRouter.post("/localEntry", saveLocalEntry);
 
 module.exports = {
   entryRouter: entryRouter,
