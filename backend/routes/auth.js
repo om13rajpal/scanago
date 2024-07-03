@@ -6,7 +6,7 @@ const { userModel } = require("../models/user");
 const path = require("path");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config();
 const secretKey = process.env.SECRET_KEY || "lol";
 
 async function registerUser(email, password) {

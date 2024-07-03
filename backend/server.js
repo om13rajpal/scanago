@@ -5,7 +5,7 @@ const { connectMongo } = require("./db/db");
 const { authRoute } = require("./routes/auth");
 const { entryRouter } = require("./routes/entry");
 
-const result = dotenv.config({ path: path.resolve(__dirname, "../.env") });
+const result = dotenv.config();
 
 if (result.error) {
   throw result.error;
