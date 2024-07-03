@@ -38,15 +38,8 @@ class _EntryListState extends State<EntryList> {
               return Map<String, dynamic>.from(item);
             }).toList();
           });
-          print(listData);
-        } else {
-          print("Expected a list but got: $listData");
         }
-      } else {
-        print("Response status is false: ${jsonRes['message']}");
       }
-    } else {
-      print("HTTP request failed with status: ${response.statusCode}");
     }
   }
 
@@ -64,15 +57,23 @@ class _EntryListState extends State<EntryList> {
                 itemBuilder: (context, index) {
                   var listItem = entryList[index];
                   DateTime dateTime = DateTime.parse(listItem['dateNtime']);
+                  int hour = dateTime.hour;
+                  String period = hour >= 12 ? 'PM' : 'AM';
+                  if (hour == 0) {
+                    hour = 12;
+                  } else if (hour > 12) {
+                    hour -= 12;
+                  }
                   String date =
-                      '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+                      '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year} $period';
                   String time =
-                      '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
+                      '${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period';
                   return ListTile(
-                    title: Text(listItem['email']),
+                    title: Text(listItem['reason']),
                     subtitle: Text(date),
                     trailing: Text(time),
                     leading: Text((index + 1).toString()),
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
                   );
                 },
               ),

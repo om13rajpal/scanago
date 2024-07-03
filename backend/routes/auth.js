@@ -29,8 +29,13 @@ async function register(req, res, next) {
       const user = await registerUser(data.email, data.password);
       if (user) {
         const tokenData = {
-          _id: user._id,
+          _id: user.id,
           email: user.email,
+          name: user.name,
+          rollNo: user.rollNo,
+          branch: user.branch,
+          phoneNo: user.phoneNo,
+          room: user.room
         };
         const token = generateToken(tokenData, secretKey, "1h");
 

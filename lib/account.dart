@@ -41,7 +41,37 @@ class _AccountState extends State<Account> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.60,
+              height: MediaQuery.of(context).size.height * 0.30,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Hey ${widget.name}!',
+                    style: const TextStyle(
+                        fontFamily: 'monkey',
+                        fontSize: 40,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'Roll Number: ${widget.rollNo}',
+                    style: const TextStyle(
+                        fontFamily: 'monkey',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    'Branch: ${widget.branch}',
+                    style: const TextStyle(
+                        fontFamily: 'monkey',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,

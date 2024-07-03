@@ -4,7 +4,7 @@ const { userModel } = require("../models/user");
 const entryRouter = require("express").Router();
 
 async function saveHomeEntry(req, res, next) {
-  const { name, rollNo, email, phoneNo, room, branch, dateNtime } = req.body;
+  const { name, rollNo, email, phoneNo, room, branch, dateNtime, reason } = req.body;
   const homeEntry = await homeEntryModel({
     name,
     rollNo,
@@ -13,6 +13,7 @@ async function saveHomeEntry(req, res, next) {
     room,
     branch,
     dateNtime,
+    reason
   });
 
   if (!homeEntry) {
@@ -52,7 +53,7 @@ async function saveHomeEntry(req, res, next) {
 }
 
 async function saveLocalEntry(req, res, next) {
-  const { name, rollNo, email, phoneNo, room, branch, dateNtime } = req.body;
+  const { name, rollNo, email, phoneNo, room, branch, dateNtime, reason } = req.body;
   const newEntry = await localEntryModel({
     name,
     rollNo,
@@ -61,6 +62,7 @@ async function saveLocalEntry(req, res, next) {
     room,
     branch,
     dateNtime,
+    reason
   });
   if (!newEntry) {
     res

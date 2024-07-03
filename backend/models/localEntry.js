@@ -29,6 +29,10 @@ const localEntrySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  reason: {
+    type: String,
+    required: true
+  }
 });
 
 const localEntryModel = mongoose.model("local", localEntrySchema);

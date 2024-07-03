@@ -27,7 +27,11 @@ const homeEntrySchema = new mongoose.Schema({
   },
   dateNtime: {
     type: String,
-    required: true
+    required: true,
+  },
+  reason: {
+    type: String,
+    required: true,
   },
 });
 
