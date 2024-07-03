@@ -26,7 +26,8 @@ const homeEntrySchema = new mongoose.Schema({
     required: true,
   },
   dateNtime: {
-    type: Date,
+    type: String,
+    required: true
   },
 });
 

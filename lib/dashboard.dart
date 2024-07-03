@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:scanago/account.dart';
+import 'package:scanago/qrcode.dart';
 
 class Dashboard extends StatefulWidget {
   final dynamic token;
@@ -19,7 +18,6 @@ class _DashboardState extends State<Dashboard> {
   late String phoneNo;
   late String room;
   late String branch;
-  late DateTime now;
 
   @override
   void initState() {
@@ -30,7 +28,6 @@ class _DashboardState extends State<Dashboard> {
     phoneNo = decodedToken['phoneNo'];
     room = decodedToken['room'];
     branch = decodedToken['branch'];
-    now = DateTime.now();
 
     super.initState();
   }
@@ -87,31 +84,17 @@ class _DashboardState extends State<Dashboard> {
                               color: const Color.fromARGB(215, 0, 0, 0)),
                           child: InkWell(
                             onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.45,
-                                    child: Center(
-                                      child: QrImageView(
-                                        data: jsonEncode({
-                                          "name": name,
-                                          "rollNo": rollNo,
-                                          "email": email,
-                                          "phoneNo": phoneNo,
-                                          "room": room,
-                                          "branch": branch,
-                                          "dateNtime": now.toIso8601String()
-                                        }),
-                                        version: QrVersions.auto,
-                                        size: 200,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QrCodeView(
+                                        email: email,
+                                        name: name,
+                                        rollNo: rollNo,
+                                        phoneNo: phoneNo,
+                                        room: room,
+                                        branch: branch),
+                                  ));
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,31 +124,17 @@ class _DashboardState extends State<Dashboard> {
                               color: const Color.fromARGB(215, 0, 0, 0)),
                           child: InkWell(
                             onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.45,
-                                    child: Center(
-                                      child: QrImageView(
-                                        data: jsonEncode({
-                                          "name": name,
-                                          "rollNo": rollNo,
-                                          "email": email,
-                                          "phoneNo": phoneNo,
-                                          "room": room,
-                                          "branch": branch,
-                                          "dateNtime": now.toIso8601String()
-                                        }),
-                                        version: QrVersions.auto,
-                                        size: 200,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QrCodeView(
+                                        email: email,
+                                        name: name,
+                                        rollNo: rollNo,
+                                        phoneNo: phoneNo,
+                                        room: room,
+                                        branch: branch),
+                                  ));
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -195,43 +164,23 @@ class _DashboardState extends State<Dashboard> {
                               color: const Color.fromARGB(215, 0, 0, 0)),
                           child: InkWell(
                             onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.45,
-                                    child: Center(
-                                      child: QrImageView(
-                                        data: jsonEncode({
-                                          "name": name,
-                                          "rollNo": rollNo,
-                                          "email": email,
-                                          "phoneNo": phoneNo,
-                                          "room": room,
-                                          "branch": branch,
-                                          "dateNtime": now.toIso8601String()
-                                        }),
-                                        version: QrVersions.auto,
-                                        size: 200,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Account(email: email, name: name, branch: branch, rollNo: rollNo),
+                                  ));
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.do_not_disturb_on_rounded,
+                                  Icons.person,
                                   color: Colors.white,
                                   size: 20,
                                 ),
                                 Text(
-                                  'Night Entry',
+                                  'Account',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'monkey',
