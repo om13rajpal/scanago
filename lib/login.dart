@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
+import 'package:scanago/scan.dart';
 import 'package:scanago/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +36,8 @@ class _LoginState extends State<Login> {
         "password": password.text.trim(),
       };
 
-      var response = await http.post(Uri.parse('http://localhost:3000/login'),
+      var response = await http.post(
+          Uri.parse('https://scanago.onrender.com/login'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(body));
 
@@ -44,11 +46,16 @@ class _LoginState extends State<Login> {
         var myToken = jsonRes['token'];
         await prefs.setString('token', myToken);
         if (!context.mounted) return;
+        bool admin = false;
+        if (email.text == 'admin@gmail.com') {
+          admin = true;
+        }
 
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Dashboard(token: myToken),
+              builder: (context) =>
+                  (admin) ? const Scan() : Dashboard(token: myToken),
             ));
       }
     }

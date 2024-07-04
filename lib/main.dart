@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/login.dart';
+import 'package:scanago/scan.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -23,6 +24,7 @@ class Scanago extends StatefulWidget {
 
 class _ScanagoState extends State<Scanago> {
   late bool loggedIn = false;
+  late String? email;
 
   @override
   void initState() {
@@ -34,6 +36,8 @@ class _ScanagoState extends State<Scanago> {
     if (widget.token != null) {
       if (!JwtDecoder.isExpired(widget.token)) {
         loggedIn = true;
+        Map<String, dynamic> decodedToken = JwtDecoder.decode(widget.token);
+        email = decodedToken['email'];
       }
     }
   }
@@ -45,7 +49,11 @@ class _ScanagoState extends State<Scanago> {
       theme: ThemeData(
           primaryColor: const Color(0xFFF8F4EA),
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: (loggedIn) ? Dashboard(token: widget.token) : const Login(),
+      home: (loggedIn)
+          ? (email == 'admin@gmail.com')
+              ? const Scan()
+              : Dashboard(token: widget.token)
+          : const Login(),
     );
   }
 }

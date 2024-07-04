@@ -23,7 +23,7 @@ class _EntryListState extends State<EntryList> {
   void getList() async {
     var body = {"email": widget.email};
     var response = await http.post(
-      Uri.parse('http://localhost:3000/${widget.listType}'),
+      Uri.parse('https://scanago.onrender.com/${widget.listType}'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );

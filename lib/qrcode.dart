@@ -11,6 +11,7 @@ class QrCodeView extends StatefulWidget {
   final String phoneNo;
   final String room;
   final String branch;
+  final String type;
   const QrCodeView(
       {super.key,
       required this.email,
@@ -18,7 +19,7 @@ class QrCodeView extends StatefulWidget {
       required this.rollNo,
       required this.phoneNo,
       required this.room,
-      required this.branch});
+      required this.branch, required this.type});
 
   @override
   State<QrCodeView> createState() => _QrCodeState();
@@ -101,7 +102,8 @@ class _QrCodeState extends State<QrCodeView> {
                                           'room': widget.room,
                                           'branch': widget.branch,
                                           'dateNtime': now.toIso8601String(),
-                                          'reason': reason.text
+                                          'reason': reason.text,
+                                          'type': widget.type
                                         })),
                                   );
                                 },

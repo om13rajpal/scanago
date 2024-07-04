@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
       };
 
       var response = await http.post(
-          Uri.parse('http://localhost:3000/register'),
+          Uri.parse('https://scanago.onrender.com/register'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(body));
       var jsonRes = jsonDecode(response.body);
