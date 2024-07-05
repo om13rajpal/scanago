@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class EntryList extends StatefulWidget {
-  final String email;
+  final String? email;
   final String listType;
-  const EntryList({super.key, required this.email, required this.listType});
+  const EntryList({super.key, this.email, required this.listType});
 
   @override
   State<EntryList> createState() => _EntryListState();

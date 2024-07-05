@@ -50,14 +50,40 @@ async function listLocalEntry(req, res, next) {
     }
 
     const list = await Promise.all(data);
-    res.json({ status: true, message: "Local entry found", listLocalEntry: list });
+    res.json({
+      status: true,
+      message: "Local entry found",
+      listLocalEntry: list,
+    });
   } catch (error) {
     next(error);
   }
 }
 
+async function getAllHomeList(req, res, next) {
+  const homeEntry = await homeEntryModel.find({});
+  if (!homeEntry) {
+    res.status(500).json({ status: false, message: "could not fetch entries" });
+    return;
+  }
+
+  res.json({ status: true, allHomeEntry: homeEntry });
+}
+
+async function getAllLocalList(req, res, next) {
+  const localEntry = await localEntryModel.find({});
+  if (!localEntry) {
+    res.status(500).json({ status: true, message: "Could not fetch entries" });
+    return;
+  }
+
+  res.json({ status: true, allLocalEntry: localEntry });
+}
+
 detailsRoute.post("/listHomeEntry", listHomeEntry);
 detailsRoute.post("/listLocalEntry", listLocalEntry);
+detailsRoute.post("/allHomeEntry", getAllHomeList);
+detailsRoute.post("/allLocalEntry", getAllLocalList);
 
 module.exports = {
   detailsRoute: detailsRoute,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:scanago/entrylist.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class Scan extends StatefulWidget {
@@ -106,22 +107,52 @@ class _ScanState extends State<Scan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Button(
-            text: 'Scan QR code',
-            onPressed: () async {
-              var res = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SimpleBarcodeScannerPage(),
-                ),
-              );
-              if (res is String) {
-                _showResultDialog(res);
-              }
-            },
-            radius: 12,
-            fontSize: 12),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Button(
+                text: 'Scan QR code',
+                onPressed: () async {
+                  var res = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SimpleBarcodeScannerPage(),
+                    ),
+                  );
+                  if (res is String) {
+                    _showResultDialog(res);
+                  }
+                },
+                radius: 12,
+                fontSize: 12),
+          ),
+          Button(
+              text: 'Home Entries',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const EntryList(listType: 'allHomeEntry'),
+                    ));
+              },
+              radius: 12,
+              fontSize: 12),
+          Button(
+              text: 'Local Entries',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const EntryList(listType: 'allLocalEntry'),
+                    ));
+              },
+              radius: 12,
+              fontSize: 12)
+        ],
       ),
     );
   }
