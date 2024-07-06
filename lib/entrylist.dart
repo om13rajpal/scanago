@@ -51,7 +51,7 @@ class _EntryListState extends State<EntryList> {
         height: MediaQuery.of(context).size.height,
         color: const Color(0xFFF8F4EA),
         child: entryList.isEmpty
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: Text('No Entry Found'))
             : ListView.builder(
                 itemCount: entryList.length,
                 itemBuilder: (context, index) {

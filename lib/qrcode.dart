@@ -104,7 +104,8 @@ class _QrCodeState extends State<QrCodeView> {
                                           'branch': widget.branch,
                                           'dateNtime': now.toIso8601String(),
                                           'reason': reason.text,
-                                          'type': widget.type
+                                          'type': widget.type,
+                                          'image': widget.image
                                         })),
                                   );
                                 },

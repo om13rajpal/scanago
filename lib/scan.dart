@@ -5,6 +5,8 @@ import 'package:scanago/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:scanago/entrylist.dart';
+import 'package:scanago/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class Scan extends StatefulWidget {
@@ -19,6 +21,7 @@ class _ScanState extends State<Scan> {
     var data = jsonDecode(result);
     DateTime dateTime = DateTime.parse(data['dateNtime']);
     String url = data['image'];
+    print(url);
     int hour = dateTime.hour;
     String period = hour >= 12 ? 'PM' : 'AM';
     if (hour == 0) {
@@ -37,7 +40,10 @@ class _ScanState extends State<Scan> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(url),
+              Image.network(
+                url,
+                width: 300,
+              ),
               Text('Roll No: ${data['rollNo']}'),
               Text('Branch: ${data['branch']}'),
               Text('Room: ${data['room']}'),
@@ -109,51 +115,77 @@ class _ScanState extends State<Scan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
-          Center(
-            child: Button(
-                text: 'Scan QR code',
-                onPressed: () async {
-                  var res = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SimpleBarcodeScannerPage(),
-                    ),
-                  );
-                  if (res is String) {
-                    _showResultDialog(res);
-                  }
+          Positioned(
+              top: 30,
+              right: 30,
+              child: InkWell(
+                onTap: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.remove('token');
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ));
                 },
-                radius: 12,
-                fontSize: 12),
+                child: Icon(Icons.arrow_forward_ios),
+              )),
+          Center(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.40,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Button(
+                        text: 'Scan QR code',
+                        onPressed: () async {
+                          var res = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const SimpleBarcodeScannerPage(),
+                            ),
+                          );
+                          if (res is String) {
+                            _showResultDialog(res);
+                          }
+                        },
+                        radius: 12,
+                        fontSize: 12),
+                  ),
+                  Button(
+                      text: 'Home Entries',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const EntryList(listType: 'allHomeEntry'),
+                            ));
+                      },
+                      radius: 12,
+                      fontSize: 12),
+                  Button(
+                      text: 'Local Entries',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const EntryList(listType: 'allLocalEntry'),
+                            ));
+                      },
+                      radius: 12,
+                      fontSize: 12)
+                ],
+              ),
+            ),
           ),
-          Button(
-              text: 'Home Entries',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const EntryList(listType: 'allHomeEntry'),
-                    ));
-              },
-              radius: 12,
-              fontSize: 12),
-          Button(
-              text: 'Local Entries',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const EntryList(listType: 'allLocalEntry'),
-                    ));
-              },
-              radius: 12,
-              fontSize: 12)
         ],
       ),
     );
