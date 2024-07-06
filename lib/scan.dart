@@ -18,6 +18,7 @@ class _ScanState extends State<Scan> {
   void _showResultDialog(String result) {
     var data = jsonDecode(result);
     DateTime dateTime = DateTime.parse(data['dateNtime']);
+    String url = data['image'];
     int hour = dateTime.hour;
     String period = hour >= 12 ? 'PM' : 'AM';
     if (hour == 0) {
@@ -36,6 +37,7 @@ class _ScanState extends State<Scan> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Image.asset(url),
               Text('Roll No: ${data['rollNo']}'),
               Text('Branch: ${data['branch']}'),
               Text('Room: ${data['room']}'),

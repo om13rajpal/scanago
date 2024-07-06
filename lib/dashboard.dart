@@ -20,6 +20,7 @@ class _DashboardState extends State<Dashboard> {
   late String phoneNo;
   late String room;
   late String branch;
+  late String image;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _DashboardState extends State<Dashboard> {
     phoneNo = decodedToken['phoneNo'];
     room = decodedToken['room'];
     branch = decodedToken['branch'];
+    image = decodedToken['image'];
 
     super.initState();
   }
@@ -124,7 +126,7 @@ class _DashboardState extends State<Dashboard> {
                                       phoneNo: phoneNo,
                                       room: room,
                                       branch: branch,
-                                      type: 'local',
+                                      type: 'local', image: image,
                                     ),
                                   ),
                                 );
@@ -171,6 +173,7 @@ class _DashboardState extends State<Dashboard> {
                                       room: room,
                                       branch: branch,
                                       type: 'home',
+                                      image: image,
                                     ),
                                   ),
                                 );

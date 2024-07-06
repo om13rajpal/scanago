@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema({
     ref: "local",
   }],
 
+  image: {
+    type: String,
+    default: "https://res.cloudinary.com/dvhwz7ptr/image/upload/wahswfysi62covjwfzcd.webp"
+  }
+
 });
 
 const userModel = mongoose.model("user", userSchema);

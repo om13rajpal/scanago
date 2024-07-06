@@ -35,7 +35,8 @@ async function register(req, res, next) {
           rollNo: user.rollNo,
           branch: user.branch,
           phoneNo: user.phoneNo,
-          room: user.room
+          room: user.room,
+          image: user.image
         };
         const token = generateToken(tokenData, secretKey, "1h");
 
@@ -76,7 +77,8 @@ async function login(req, res, next) {
             rollNo: user.rollNo,
             branch: user.branch,
             phoneNo: user.phoneNo,
-            room: user.room
+            room: user.room,
+            image: user.image
           };
           const token = generateToken(tokenData, secretKey, "1h");
 

@@ -12,6 +12,7 @@ class QrCodeView extends StatefulWidget {
   final String room;
   final String branch;
   final String type;
+  final String image;
   const QrCodeView(
       {super.key,
       required this.email,
@@ -19,7 +20,8 @@ class QrCodeView extends StatefulWidget {
       required this.rollNo,
       required this.phoneNo,
       required this.room,
-      required this.branch, required this.type});
+      required this.branch,
+      required this.type, required this.image});
 
   @override
   State<QrCodeView> createState() => _QrCodeState();
@@ -114,27 +116,27 @@ class _QrCodeState extends State<QrCodeView> {
                     ],
                   ),
                 )),
-                 SizedBox(
-                height: MediaQuery.of(context).size.height * 0.20,
-                child: Stack(
-                  children: [
-                    Positioned(
-                        bottom: 35,
-                        left: 16,
-                        child: Image.asset(
-                          'assets/images/bottom.png',
-                          width: 120,
-                        )),
-                    Positioned(
-                        bottom: 0,
-                        right: 15,
-                        child: Image.asset(
-                          'assets/images/arrow.png',
-                          width: 220,
-                        )),
-                  ],
-                ),
-              )
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 35,
+                      left: 16,
+                      child: Image.asset(
+                        'assets/images/bottom.png',
+                        width: 120,
+                      )),
+                  Positioned(
+                      bottom: 0,
+                      right: 15,
+                      child: Image.asset(
+                        'assets/images/arrow.png',
+                        width: 220,
+                      )),
+                ],
+              ),
+            )
           ],
         ),
       ),
