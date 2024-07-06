@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/entryList.dart';
+import 'package:scanago/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
   final String email;
@@ -19,6 +21,19 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  void logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+
+    if (!context.mounted) return;
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Login(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +45,28 @@ class _AccountState extends State<Account> {
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
-              child: const Center(
-                child: Text(
-                  'Scanago',
-                  style: TextStyle(
-                      fontFamily: 'monkey',
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: InkWell(
+                        onTap: () {
+                          logout(context);
+                        },
+                        child: const Icon(Icons.arrow_forward_ios)),
+                  ),
+                  const Center(
+                    child: Text(
+                      'Scanago',
+                      style: TextStyle(
+                        fontFamily: 'monkey',
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -71,7 +100,7 @@ class _AccountState extends State<Account> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.30,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,6 +137,27 @@ class _AccountState extends State<Account> {
                         radius: 12,
                         fontSize: 12),
                   ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 35,
+                      left: 16,
+                      child: Image.asset(
+                        'assets/images/bottom.png',
+                        width: 120,
+                      )),
+                  Positioned(
+                      bottom: 0,
+                      right: 15,
+                      child: Image.asset(
+                        'assets/images/arrow.png',
+                        width: 220,
+                      )),
                 ],
               ),
             )

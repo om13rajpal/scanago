@@ -68,7 +68,7 @@ class _ScanState extends State<Scan> {
                 }
 
                 var response = await http.post(
-                    Uri.parse('https://scanago.onrender.com/${entryType}'),
+                    Uri.parse('https://scanago.onrender.com/$entryType'),
                     headers: {"Content-Type": "application/json"},
                     body: jsonEncode(body));
 
@@ -96,7 +96,7 @@ class _ScanState extends State<Scan> {
                   );
                 }
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );

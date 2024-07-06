@@ -196,8 +196,26 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.20,
+            child: Stack(
+              children: [
+                Positioned(
+                    bottom: 35,
+                    left: 16,
+                    child: Image.asset(
+                      'assets/images/bottom.png',
+                      width: 120,
+                    )),
+                Positioned(
+                    bottom: 0,
+                    right: 15,
+                    child: Image.asset(
+                      'assets/images/arrow.png',
+                      width: 220,
+                    )),
+              ],
+            ),
           )
         ],
       ),

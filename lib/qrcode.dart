@@ -31,7 +31,6 @@ class _QrCodeState extends State<QrCodeView> {
   @override
   void initState() {
     now = DateTime.now();
-    print(now);
     super.initState();
   }
 
@@ -80,7 +79,7 @@ class _QrCodeState extends State<QrCodeView> {
                         ),
                         style: const TextStyle(color: Colors.white),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Button(
@@ -115,6 +114,27 @@ class _QrCodeState extends State<QrCodeView> {
                     ],
                   ),
                 )),
+                 SizedBox(
+                height: MediaQuery.of(context).size.height * 0.20,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        bottom: 35,
+                        left: 16,
+                        child: Image.asset(
+                          'assets/images/bottom.png',
+                          width: 120,
+                        )),
+                    Positioned(
+                        bottom: 0,
+                        right: 15,
+                        child: Image.asset(
+                          'assets/images/arrow.png',
+                          width: 220,
+                        )),
+                  ],
+                ),
+              )
           ],
         ),
       ),

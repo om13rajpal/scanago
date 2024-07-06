@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/account.dart';
+import 'package:scanago/login.dart';
 import 'package:scanago/qrcode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   final dynamic token;
@@ -32,6 +34,19 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
+  void logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+
+    if (!context.mounted) return;
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Login(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +59,28 @@ class _DashboardState extends State<Dashboard> {
             children: [
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.20,
-                child: const Center(
-                  child: Text(
-                    'Scanago',
-                    style: TextStyle(
-                      fontFamily: 'monkey',
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 20,
+                      right: 20,
+                      child: InkWell(
+                          onTap: () {
+                            logout(context);
+                          },
+                          child: const Icon(Icons.arrow_forward_ios)),
                     ),
-                  ),
+                    const Center(
+                      child: Text(
+                        'Scanago',
+                        style: TextStyle(
+                          fontFamily: 'monkey',
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -218,6 +246,27 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.20,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        bottom: 35,
+                        left: 16,
+                        child: Image.asset(
+                          'assets/images/bottom.png',
+                          width: 120,
+                        )),
+                    Positioned(
+                        bottom: 0,
+                        right: 15,
+                        child: Image.asset(
+                          'assets/images/arrow.png',
+                          width: 220,
+                        )),
+                  ],
+                ),
+              )
             ],
           ),
         ),
