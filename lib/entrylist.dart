@@ -43,40 +43,110 @@ class _EntryListState extends State<EntryList> {
     }
   }
 
+  String dropdownValue = 'old';
+
+  var items = ['old', 'new'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: const Color(0xFFF8F4EA),
-        child: entryList.isEmpty
-            ? const Center(child: Text('No Entry Found'))
-            : ListView.builder(
-                itemCount: entryList.length,
-                itemBuilder: (context, index) {
-                  var listItem = entryList[index];
-                  DateTime dateTime = DateTime.parse(listItem['dateNtime']);
-                  int hour = dateTime.hour;
-                  String period = hour >= 12 ? 'PM' : 'AM';
-                  if (hour == 0) {
-                    hour = 12;
-                  } else if (hour > 12) {
-                    hour -= 12;
-                  }
-                  String date =
-                      '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year} $period';
-                  String time =
-                      '${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period';
-                  return ListTile(
-                    title: Text(listItem['reason']),
-                    subtitle: Text(date),
-                    trailing: Text(time),
-                    leading: Text((index + 1).toString()),
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  );
-                },
-              ),
+      body: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.1,
+            color: const Color(0xFFF8F4EA),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward,
+                      color: Color.fromARGB(255, 0, 0, 0)),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                  dropdownColor: Colors.white,
+                  underline: Container(
+                    height: 2,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
+                  },
+                  items: items.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          color: value == dropdownValue
+                              ? const Color.fromARGB(255, 0, 0, 0)
+                              : Colors.black, // Change color of selected item
+                          fontWeight: value == dropdownValue
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  selectedItemBuilder: (BuildContext context) {
+                    return items.map<Widget>((String value) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    }).toList();
+                  },
+                )
+              ],
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.9,
+            color: const Color(0xFFF8F4EA),
+            child: entryList.isEmpty
+                ? const Center(child: Text('No Entry Found'))
+                : ListView.builder(
+                    reverse: false,
+                    itemCount: entryList.length,
+                    itemBuilder: (context, index) {
+                      int displayIndex = dropdownValue == 'new'
+                          ? entryList.length - 1 - index
+                          : index;
+                      var listItem = entryList[displayIndex];
+                      DateTime dateTime = DateTime.parse(listItem['dateNtime']);
+                      int hour = dateTime.hour;
+                      String period = hour >= 12 ? 'PM' : 'AM';
+                      if (hour == 0) {
+                        hour = 12;
+                      } else if (hour > 12) {
+                        hour -= 12;
+                      }
+                      String date =
+                          '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}';
+                      String time =
+                          '${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period';
+                      return ListTile(
+                        title: Text(listItem['reason']),
+                        subtitle: Text(date),
+                        trailing: Text(time),
+                        leading: Text((displayIndex + 1).toString()),
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                      );
+                    },
+                  ),
+          )
+        ],
       ),
     );
   }

@@ -21,7 +21,6 @@ class _ScanState extends State<Scan> {
     var data = jsonDecode(result);
     DateTime dateTime = DateTime.parse(data['dateNtime']);
     String url = data['image'];
-    print(url);
     int hour = dateTime.hour;
     String period = hour >= 12 ? 'PM' : 'AM';
     if (hour == 0) {
@@ -91,6 +90,7 @@ class _ScanState extends State<Scan> {
                     textColor: Colors.white,
                     fontSize: 16.0,
                   );
+                  if (!context.mounted) return;
                   Navigator.pop(context);
                 } else {
                   Fluttertoast.showToast(
@@ -124,6 +124,7 @@ class _ScanState extends State<Scan> {
                 onTap: () async {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
+                  if (!context.mounted) return;
                   prefs.remove('token');
                   Navigator.pushReplacement(
                       context,
@@ -131,7 +132,7 @@ class _ScanState extends State<Scan> {
                         builder: (context) => const Login(),
                       ));
                 },
-                child: Icon(Icons.arrow_forward_ios),
+                child: const Icon(Icons.arrow_forward_ios),
               )),
           Center(
             child: SizedBox(
