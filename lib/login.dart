@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/scan.dart';
@@ -52,17 +53,32 @@ class _LoginState extends State<Login> {
         }
 
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  (admin) ? const Scan() : Dashboard(token: myToken),
-            ));
+          context,
+          _createFadeRoute(admin ? const Scan() : Dashboard(token: myToken)),
+        );
       }
     }
   }
 
+  Route _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ));
     return Scaffold(
         body: Container(
       width: MediaQuery.of(context).size.width,
@@ -126,6 +142,7 @@ class _LoginState extends State<Login> {
                         ),
                         TextField(
                           controller: password,
+                          obscureText: true,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             prefixIcon: const Icon(
@@ -173,11 +190,8 @@ class _LoginState extends State<Login> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const SignUp(),
-                                        ));
+                                    Navigator.push(context,
+                                        _createFadeRoute(const SignUp()));
                                   },
                                   child: const Text(
                                     'Sign up',

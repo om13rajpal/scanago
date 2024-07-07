@@ -15,20 +15,30 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   _navigateToHome(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 6), () {});
+    await Future.delayed(const Duration(seconds: 3), () {});
     if (!context.mounted) return;
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) {
-        if (widget.isLoggedIn == 'admin') {
-          return const Scan();
-        } else if (widget.isLoggedIn == 'yes') {
-          return Dashboard(token: widget.token);
-        } else {
-          return const Login();
-        }
-      }),
+    Widget nextPage;
+    if (widget.isLoggedIn == 'admin') {
+      nextPage = const Scan();
+    } else if (widget.isLoggedIn == 'yes') {
+      nextPage = Dashboard(token: widget.token);
+    } else {
+      nextPage = const Login();
+    }
+
+    Navigator.pushReplacement(context, _createFadeRoute(nextPage));
+  }
+
+  Route _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
     );
   }
 
@@ -44,10 +54,10 @@ class _SplashState extends State<Splash> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xff0e0e0e),
+        color: const Color(0xff000000),
         child: Center(
           child: Lottie.network(
-              'https://lottie.host/5f1136d0-d88a-4045-beda-b52efea0a1de/6nhB6joL9N.json'),
+              'https://lottie.host/10a006af-a634-4a67-bc34-71c83f4879d9/EZa8qiBtqF.json'),
         ),
       ),
     );

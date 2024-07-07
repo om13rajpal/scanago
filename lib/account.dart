@@ -27,11 +27,19 @@ class _AccountState extends State<Account> {
 
     if (!context.mounted) return;
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Login(),
-        ));
+    Navigator.pushReplacement(context, _createFadeRoute(const Login()));
+  }
+
+  Route _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -48,7 +56,7 @@ class _AccountState extends State<Account> {
               child: Stack(
                 children: [
                   Positioned(
-                    top: 20,
+                    top: 30,
                     right: 20,
                     child: InkWell(
                         onTap: () {
@@ -111,12 +119,12 @@ class _AccountState extends State<Account> {
                         text: 'View Home Entry',
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EntryList(
-                                    email: widget.email,
-                                    listType: 'listHomeEntry'),
-                              ));
+                            context,
+                            _createFadeRoute(EntryList(
+                              email: widget.email,
+                              listType: 'listHomeEntry',
+                            )),
+                          );
                         },
                         radius: 12,
                         fontSize: 12),
@@ -127,12 +135,12 @@ class _AccountState extends State<Account> {
                         text: 'View Local Entry',
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EntryList(
-                                    email: widget.email,
-                                    listType: 'listLocalEntry'),
-                              ));
+                            context,
+                            _createFadeRoute(EntryList(
+                              email: widget.email,
+                              listType: 'listLocalEntry',
+                            )),
+                          );
                         },
                         radius: 12,
                         fontSize: 12),
@@ -167,3 +175,4 @@ class _AccountState extends State<Account> {
     );
   }
 }
+  

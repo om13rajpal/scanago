@@ -111,41 +111,82 @@ class _EntryListState extends State<EntryList> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.9,
-            color: const Color(0xFFF8F4EA),
-            child: entryList.isEmpty
-                ? const Center(child: Text('No Entry Found'))
-                : ListView.builder(
-                    reverse: false,
-                    itemCount: entryList.length,
-                    itemBuilder: (context, index) {
-                      int displayIndex = dropdownValue == 'new'
-                          ? entryList.length - 1 - index
-                          : index;
-                      var listItem = entryList[displayIndex];
-                      DateTime dateTime = DateTime.parse(listItem['dateNtime']);
-                      int hour = dateTime.hour;
-                      String period = hour >= 12 ? 'PM' : 'AM';
-                      if (hour == 0) {
-                        hour = 12;
-                      } else if (hour > 12) {
-                        hour -= 12;
-                      }
-                      String date =
-                          '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}';
-                      String time =
-                          '${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period';
-                      return ListTile(
-                        title: Text(listItem['reason']),
-                        subtitle: Text(date),
-                        trailing: Text(time),
-                        leading: Text((displayIndex + 1).toString()),
-                        visualDensity: VisualDensity.adaptivePlatformDensity,
-                      );
-                    },
-                  ),
-          )
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.9,
+              color: const Color(0xFFF8F4EA),
+              child: entryList.isEmpty
+                  ? const Center(child: Text('No Entry Found'))
+                  : ListView.builder(
+                      reverse: false,
+                      itemCount: entryList.length,
+                      itemBuilder: (context, index) {
+                        int displayIndex = dropdownValue == 'new'
+                            ? entryList.length - 1 - index
+                            : index;
+                        var listItem = entryList[displayIndex];
+                        DateTime dateTime =
+                            DateTime.parse(listItem['dateNtime']);
+                        int hour = dateTime.hour;
+                        String period = hour >= 12 ? 'PM' : 'AM';
+                        if (hour == 0) {
+                          hour = 12;
+                        } else if (hour > 12) {
+                          hour -= 12;
+                        }
+                        String date =
+                            '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}';
+                        String time =
+                            '${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period';
+                        return Card(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 2.0, horizontal: 8.0),
+                          color: Colors.black,
+                          child: ListTile(
+                            title: Text(
+                              listItem['reason'],
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 4.0),
+                                Text(
+                                  'Name: ${listItem['name']}',
+                                  style: const TextStyle(color: Colors.white70),
+                                ),
+                                Text(
+                                  'Branch: ${listItem['branch']}',
+                                  style: const TextStyle(color: Colors.white60),
+                                ),
+                                Text(
+                                  'Date: $date',
+                                  style: const TextStyle(color: Colors.white54),
+                                ),
+                              ],
+                            ),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  time,
+                                  style: const TextStyle(color: Colors.white60),
+                                ),
+                              ],
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.white60,
+                              child: Text(
+                                (displayIndex + 1).toString(),
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            visualDensity:
+                                VisualDensity.adaptivePlatformDensity,
+                          ),
+                        );
+                      }))
         ],
       ),
     );

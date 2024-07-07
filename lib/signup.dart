@@ -45,175 +45,186 @@ class _SignUpState extends State<SignUp> {
         await prefs.setString("token", myToken);
         if (!context.mounted) return;
 
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Dashboard(
-                token: myToken,
-              ),
-            ));
+        Navigator.of(context)
+            .pushReplacement(_createFadeRoute(Dashboard(token: myToken)));
       }
     }
+  }
+
+  Route _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: const Color(0xFFF8F4EA),
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.20,
-            child: const Center(
-              child: Text(
-                'Scanago',
-                style: TextStyle(
-                    fontFamily: 'monkey',
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: const Color(0xFFF8F4EA),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: const Center(
+                child: Text(
+                  'Scanago',
+                  style: TextStyle(
+                      fontFamily: 'monkey',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.60,
-            child: Stack(
-              children: [
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    'assets/images/woman.png',
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.60,
+              child: Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Image.asset(
+                      'assets/images/woman.png',
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          'Unlock\ncampus\nwith a\nscan',
-                          style: TextStyle(
-                              fontFamily: 'monkey', fontSize: 30, height: 1.2),
-                        ),
-                        TextField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(230, 0, 0, 0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                            'Unlock\ncampus\nwith a\nscan',
+                            style: TextStyle(
+                                fontFamily: 'monkey',
+                                fontSize: 30,
+                                height: 1.2),
                           ),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        TextField(
-                          controller: password,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 20,
+                          TextField(
+                            controller: email,
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              prefixIcon: const Icon(
+                                Icons.email,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              filled: true,
+                              fillColor: const Color.fromARGB(230, 0, 0, 0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              labelStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(230, 0, 0, 0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
-                            ),
+                            style: const TextStyle(color: Colors.white),
                           ),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 35,
-                              width: 110,
-                              child: Button(
-                                  text: 'SignUp',
-                                  onPressed: () {
-                                    registerUser(context);
-                                  },
-                                  radius: 20,
-                                  fontSize: 15),
+                          TextField(
+                            controller: password,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              filled: true,
+                              fillColor: const Color.fromARGB(230, 0, 0, 0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              labelStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Already a user?',
-                                  style: TextStyle(fontFamily: 'monkey '),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const Login(),
-                                        ));
-                                  },
-                                  child: const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontFamily: 'monkey',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 35,
+                                width: 110,
+                                child: Button(
+                                    text: 'SignUp',
+                                    onPressed: () {
+                                      registerUser(context);
+                                    },
+                                    radius: 20,
+                                    fontSize: 15),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Already a user?',
+                                    style: TextStyle(fontFamily: 'monkey '),
                                   ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ]),
-                )
-              ],
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const Login(),
+                                          ));
+                                    },
+                                    child: const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          fontFamily: 'monkey',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ]),
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.20,
-            child: Stack(
-              children: [
-                Positioned(
-                    bottom: 35,
-                    left: 16,
-                    child: Image.asset(
-                      'assets/images/bottom.png',
-                      width: 120,
-                    )),
-                Positioned(
-                    bottom: 0,
-                    right: 15,
-                    child: Image.asset(
-                      'assets/images/arrow.png',
-                      width: 220,
-                    )),
-              ],
-            ),
-          )
-        ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 35,
+                      left: 16,
+                      child: Image.asset(
+                        'assets/images/bottom.png',
+                        width: 120,
+                      )),
+                  Positioned(
+                      bottom: 0,
+                      right: 15,
+                      child: Image.asset(
+                        'assets/images/arrow.png',
+                        width: 220,
+                      )),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

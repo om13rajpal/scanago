@@ -42,11 +42,19 @@ class _DashboardState extends State<Dashboard> {
 
     if (!context.mounted) return;
 
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Login(),
-        ));
+    Navigator.pushReplacement(context, _createFadeRoute(const Login()));
+  }
+
+  Route _createFadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -64,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Stack(
                   children: [
                     Positioned(
-                      top: 20,
+                      top: 30,
                       right: 20,
                       child: InkWell(
                           onTap: () {
@@ -118,17 +126,16 @@ class _DashboardState extends State<Dashboard> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QrCodeView(
-                                      email: email,
-                                      name: name,
-                                      rollNo: rollNo,
-                                      phoneNo: phoneNo,
-                                      room: room,
-                                      branch: branch,
-                                      type: 'local', image: image,
-                                    ),
-                                  ),
+                                  _createFadeRoute(QrCodeView(
+                                    email: email,
+                                    name: name,
+                                    rollNo: rollNo,
+                                    phoneNo: phoneNo,
+                                    room: room,
+                                    branch: branch,
+                                    type: 'local',
+                                    image: image,
+                                  )),
                                 );
                               },
                               child: const Row(
@@ -164,18 +171,16 @@ class _DashboardState extends State<Dashboard> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QrCodeView(
-                                      email: email,
-                                      name: name,
-                                      rollNo: rollNo,
-                                      phoneNo: phoneNo,
-                                      room: room,
-                                      branch: branch,
-                                      type: 'home',
-                                      image: image,
-                                    ),
-                                  ),
+                                  _createFadeRoute(QrCodeView(
+                                    email: email,
+                                    name: name,
+                                    rollNo: rollNo,
+                                    phoneNo: phoneNo,
+                                    room: room,
+                                    branch: branch,
+                                    type: 'home',
+                                    image: image,
+                                  )),
                                 );
                               },
                               child: const Row(
@@ -211,14 +216,12 @@ class _DashboardState extends State<Dashboard> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Account(
-                                      email: email,
-                                      name: name,
-                                      branch: branch,
-                                      rollNo: rollNo,
-                                    ),
-                                  ),
+                                  _createFadeRoute(Account(
+                                    email: email,
+                                    name: name,
+                                    branch: branch,
+                                    rollNo: rollNo,
+                                  )),
                                 );
                               },
                               child: const Row(
