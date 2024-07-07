@@ -84,7 +84,7 @@ class _EntryListState extends State<EntryList> {
                         style: TextStyle(
                           color: value == dropdownValue
                               ? const Color.fromARGB(255, 0, 0, 0)
-                              : Colors.black, // Change color of selected item
+                              : Colors.black,
                           fontWeight: value == dropdownValue
                               ? FontWeight.bold
                               : FontWeight.normal,
@@ -98,8 +98,8 @@ class _EntryListState extends State<EntryList> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           value,
-                          style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.bold,
                           ),
                         ),

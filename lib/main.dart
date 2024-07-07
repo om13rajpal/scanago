@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:scanago/dashboard.dart';
-import 'package:scanago/login.dart';
-import 'package:scanago/scan.dart';
+import 'package:scanago/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -51,9 +49,9 @@ class _ScanagoState extends State<Scanago> {
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: (loggedIn)
           ? (email == 'admin@gmail.com')
-              ? const Scan()
-              : Dashboard(token: widget.token)
-          : const Login(),
+              ? Splash(isLoggedIn: 'admin', token: widget.token)
+              : Splash(isLoggedIn: 'yes', token: widget.token,)
+          : const Splash(isLoggedIn: 'no',),
     );
   }
 }
