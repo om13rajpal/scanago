@@ -70,40 +70,39 @@ class _DetailsState extends State<Details> {
     );
   }
 
-Future<void> saveData(BuildContext context) async {
-  var body = {
-    'email': email,
-    'name': name.text,
-    'phoneNo': phoneNo.text,
-    'room': room.text,
-    'rollNo': rollNo.text,
-    'branch': (_selectedValue == 1) ? 'CSE' : 'MBA',
-    'image': _uploadedImageUrl,
-  };
+  Future<void> saveData(BuildContext context) async {
+    var body = {
+      'email': email,
+      'name': name.text,
+      'phoneNo': phoneNo.text,
+      'room': room.text,
+      'rollNo': rollNo.text,
+      'branch': (_selectedValue == 1) ? 'CSE' : 'MBA',
+      'image': _uploadedImageUrl,
+    };
 
-  var response = await http.post(
-    Uri.parse('https://scanago.onrender.com/updateDetails'),
-    headers: {"Content-Type": "application/json"},
-    body: jsonEncode(body),
-  );
-
-  var jsonRes = await jsonDecode(response.body);
-
-  if (jsonRes['status']) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    
-    await prefs.remove('token');
-    await prefs.setString('token', jsonRes['token']);
-    token = prefs.getString('token');
-        if (!context.mounted) return;
-
-    Navigator.pushReplacement(
-      context,
-      _createFadeRoute(Dashboard(token: token)),
+    var response = await http.post(
+      Uri.parse('https://scanago.onrender.com/updateDetails'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
     );
-  }
-}
 
+    var jsonRes = await jsonDecode(response.body);
+
+    if (jsonRes['status']) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.remove('token');
+      await prefs.setString('token', jsonRes['token']);
+      token = prefs.getString('token');
+      if (!context.mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        _createFadeRoute(Dashboard(token: token)),
+      );
+    }
+  }
 
   TextEditingController name = TextEditingController();
   TextEditingController phoneNo = TextEditingController();
@@ -157,7 +156,7 @@ Future<void> saveData(BuildContext context) async {
                     decoration: InputDecoration(
                       hintText: 'Name',
                       prefixIcon: const Icon(
-                        Icons.email,
+                        Icons.account_circle,
                         color: Colors.white,
                         size: 20,
                       ),
@@ -178,7 +177,7 @@ Future<void> saveData(BuildContext context) async {
                     decoration: InputDecoration(
                       hintText: 'Phone Number',
                       prefixIcon: const Icon(
-                        Icons.email,
+                        Icons.phone,
                         color: Colors.white,
                         size: 20,
                       ),
@@ -199,7 +198,7 @@ Future<void> saveData(BuildContext context) async {
                     decoration: InputDecoration(
                       hintText: 'Room',
                       prefixIcon: const Icon(
-                        Icons.email,
+                        Icons.room,
                         color: Colors.white,
                         size: 20,
                       ),
@@ -220,7 +219,7 @@ Future<void> saveData(BuildContext context) async {
                     decoration: InputDecoration(
                       hintText: 'Roll Number',
                       prefixIcon: const Icon(
-                        Icons.email,
+                        Icons.numbers,
                         color: Colors.white,
                         size: 20,
                       ),
