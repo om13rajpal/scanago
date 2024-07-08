@@ -64,7 +64,7 @@ Scanago is a Flutter application designed to streamline and digitalize the in an
 The backend of Scanago is built with Node.js, Express, and MongoDB. Follow these steps to set up the backend:
 
 1. **Configure MongoDB:**
-    Ensure that MongoDB is running and accessible. You can configure the connection string in `backend/config/db.js`.
+    Ensure that MongoDB is running and accessible. You can configure the connection string in `backend/db/db.js`.
 
 2. **Environment Variables:**
     Create a `.env` file in the `backend` directory with the following variables:
