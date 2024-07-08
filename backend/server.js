@@ -32,6 +32,10 @@ connectMongo();
 
 app.use(sanitize());
 
+app.get("/", (req, res)=>{
+  res.send("Welcome to Scanago. The backend is up and working properly :D")
+})
+
 app.listen(port, () => {
   console.log("your server has started");
 });
