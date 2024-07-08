@@ -91,6 +91,9 @@ The backend server will start on the port specified in the `.env` file (default 
 3. **Rate Mess Food:**
     Rate the food in the mess to provide feedback.
 
+4. **Admin Panel:**
+    To view the admin panel, register yourself with the email `admin@gmail.com` and a password of your choice.
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and create a pull request with your changes. Make sure to follow the coding standards and include relevant tests for your changes.
