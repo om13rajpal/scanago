@@ -21,7 +21,8 @@ class QrCodeView extends StatefulWidget {
       required this.phoneNo,
       required this.room,
       required this.branch,
-      required this.type, required this.image});
+      required this.type,
+      required this.image});
 
   @override
   State<QrCodeView> createState() => _QrCodeState();
@@ -93,20 +94,40 @@ class _QrCodeState extends State<QrCodeView> {
                                 builder: (context) {
                                   return Center(
                                     child: QrImageView(
-                                        version: QrVersions.auto,
-                                        size: 200,
-                                        data: jsonEncode({
-                                          'email': widget.email,
-                                          'name': widget.name,
-                                          'rollNo': widget.rollNo,
-                                          'phoneNo': widget.phoneNo,
-                                          'room': widget.room,
-                                          'branch': widget.branch,
-                                          'dateNtime': now.toIso8601String(),
-                                          'reason': reason.text,
-                                          'type': widget.type,
-                                          'image': widget.image
-                                        })),
+                                      version: QrVersions.auto,
+                                      size: 250,
+                                      data: jsonEncode({
+                                        'email': widget.email,
+                                        'name': widget.name,
+                                        'rollNo': widget.rollNo,
+                                        'phoneNo': widget.phoneNo,
+                                        'room': widget.room,
+                                        'branch': widget.branch,
+                                        'dateNtime': now.toIso8601String(),
+                                        'reason': reason.text,
+                                        'type': widget.type,
+                                        'image': widget.image
+                                      }),
+                                      gapless: false,
+                                      padding: const EdgeInsets.all(10),
+                                      eyeStyle: const QrEyeStyle(
+                                        eyeShape: QrEyeShape.circle,
+                                        color: Colors.black,
+                                      ),
+                                      dataModuleStyle: const QrDataModuleStyle(
+                                        dataModuleShape:
+                                            QrDataModuleShape.circle,
+                                        color: Colors.black,
+                                      ),
+                                      errorStateBuilder: (cxt, err) {
+                                        return const Center(
+                                          child: Text(
+                                            "Uh oh! Something went wrong...",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                               );

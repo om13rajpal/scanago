@@ -119,48 +119,86 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                               fontFamily: 'monkey', fontSize: 30, height: 1.2),
                         ),
-                        TextField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: Colors.white,
-                              size: 20,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Transform.translate(
+                              offset: const Offset(3, 0),
+                              child: const Text(
+                                'Email',
+                                style: TextStyle(
+                                    fontFamily: 'monkey',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(230, 0, 0, 0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
+                            const SizedBox(
+                              height: 4,
                             ),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
+                            TextField(
+                              controller: email,
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                                prefixIcon: const Icon(
+                                  Icons.email,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                filled: true,
+                                fillColor: const Color.fromARGB(230, 0, 0, 0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintStyle: const TextStyle(
+                                  color: Colors.white60,
+                                ),
+                              ),
+                              style: const TextStyle(color: Colors.white),
                             ),
-                          ),
-                          style: const TextStyle(color: Colors.white),
+                          ],
                         ),
-                        TextField(
-                          controller: password,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 20,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Transform.translate(
+                              offset: const Offset(3, 0),
+                              child: const Text(
+                                'Password',
+                                style: TextStyle(
+                                    fontFamily: 'monkey',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(230, 0, 0, 0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: BorderSide.none,
+                            const SizedBox(
+                              height: 4,
                             ),
-                            labelStyle: const TextStyle(
-                              color: Colors.white,
+                            TextField(
+                              controller: password,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                                prefixIcon: const Icon(
+                                  Icons.lock,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                filled: true,
+                                fillColor: const Color.fromARGB(230, 0, 0, 0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintStyle: const TextStyle(
+                                  color: Colors.white60,
+                                ),
+                              ),
+                              style: const TextStyle(color: Colors.white),
                             ),
-                          ),
-                          style: const TextStyle(color: Colors.white),
+                          ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
