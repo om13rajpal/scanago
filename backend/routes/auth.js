@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const { validateInput } = require("../utils/zod");
 const { generateToken } = require("../utils/jwt");
 const { userModel } = require("../models/user");
-const path = require("path");
 const dotenv = require("dotenv");
 
 dotenv.config();

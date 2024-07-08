@@ -12,7 +12,7 @@ class QrCodeView extends StatefulWidget {
   final String room;
   final String branch;
   final String type;
-  final String image;
+  final String? image;
   const QrCodeView(
       {super.key,
       required this.email,

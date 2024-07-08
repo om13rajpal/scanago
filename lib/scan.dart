@@ -75,7 +75,7 @@ class _ScanState extends State<Scan> {
                 }
 
                 var response = await http.post(
-                    Uri.parse('https://scanago.onrender.com/$entryType'),
+                    Uri.parse('http://localhost:3000/$entryType'),
                     headers: {"Content-Type": "application/json"},
                     body: jsonEncode(body));
 

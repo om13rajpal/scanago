@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard> {
   late String phoneNo;
   late String room;
   late String branch;
-  late String image;
+  late String? image;
 
   @override
   void initState() {

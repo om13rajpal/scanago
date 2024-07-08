@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
-import 'package:scanago/dashboard.dart';
+import 'package:scanago/details.dart';
 import 'package:scanago/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
         if (!context.mounted) return;
 
         Navigator.of(context)
-            .pushReplacement(_createFadeRoute(Dashboard(token: myToken)));
+            .pushReplacement(_createFadeRoute(Details(token: myToken)));
       }
     }
   }

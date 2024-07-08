@@ -15,7 +15,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   _navigateToHome(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 3), () {});
+    await Future.delayed(const Duration(seconds: 2), () {});
     if (!context.mounted) return;
 
     Widget nextPage;
