@@ -16,6 +16,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.set('trust proxy', true);
+
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 100,
@@ -28,9 +30,10 @@ app.use(authRoute);
 app.use(entryRouter);
 app.use(detailsRoute);
 
+app.use(sanitize());
+
 connectMongo();
 
-app.use(sanitize());
 
 app.get("/", (req, res)=>{
   res.send("Welcome to Scanago. The backend is up and working properly :D")

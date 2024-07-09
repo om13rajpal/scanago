@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  void loginUser(BuildContext context) async {
+  Future<void> loginUser(BuildContext context) async {
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var body = {
         "email": email.text.trim(),

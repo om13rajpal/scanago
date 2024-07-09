@@ -21,7 +21,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  void logout(BuildContext context) async {
+  Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -52,7 +53,17 @@ class _DetailsState extends State<Details> {
     if (response.statusCode == 200) {
       final responseData = await response.stream.bytesToString();
       final data = jsonDecode(responseData);
+      Fluttertoast.showToast(
+        msg: "Image Uploaded",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       setState(() {
+        imagebutton = "Image Uploaded";
         _uploadedImageUrl = data['secure_url'];
       });
     }
@@ -95,11 +106,31 @@ class _DetailsState extends State<Details> {
       await prefs.remove('token');
       await prefs.setString('token', jsonRes['token']);
       token = prefs.getString('token');
+
+      Fluttertoast.showToast(
+        msg: "Entry Saved",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       if (!context.mounted) return;
 
       Navigator.pushReplacement(
         context,
         _createFadeRoute(Dashboard(token: token)),
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "could not save data",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
@@ -110,6 +141,7 @@ class _DetailsState extends State<Details> {
   TextEditingController room = TextEditingController();
   late String email;
   late String? token;
+  late String imagebutton = "Select Image";
 
   int? _selectedValue;
 
@@ -283,7 +315,7 @@ class _DetailsState extends State<Details> {
                   ),
                   Button(
                     onPressed: pickImage,
-                    text: 'Choose Image',
+                    text: imagebutton,
                     fontSize: 12,
                     radius: 12,
                   ),

@@ -28,7 +28,7 @@ class _SignUpState extends State<SignUp> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  void registerUser(BuildContext context) async {
+  Future<void> registerUser(BuildContext context) async {
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       var body = {
         "email": email.text.trim(),
