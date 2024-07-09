@@ -25,12 +25,13 @@ const limiter = rateLimit({
 })
 
 app.use(limiter);
+app.use(sanitize());
+
 
 app.use(authRoute);
 app.use(entryRouter);
 app.use(detailsRoute);
 
-app.use(sanitize());
 
 connectMongo();
 
