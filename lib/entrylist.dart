@@ -178,7 +178,7 @@ class _EntryListState extends State<EntryList> {
                             leading: CircleAvatar(
                               backgroundColor: Colors.white60,
                               child: Text(
-                                (displayIndex + 1).toString(),
+                                (index + 1).toString(),
                                 style: const TextStyle(color: Colors.black),
                               ),
                             ),

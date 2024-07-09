@@ -54,10 +54,10 @@ class _SplashState extends State<Splash> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xff000000),
+        color: const Color(0xff0d0d0d),
         child: Center(
           child: Lottie.network(
-              'https://lottie.host/10a006af-a634-4a67-bc34-71c83f4879d9/EZa8qiBtqF.json'),
+              'https://lottie.host/72a44aa3-63c8-49c9-9483-0e86948ae793/FuCqO6JBZB.json'),
         ),
       ),
     );

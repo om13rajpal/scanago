@@ -43,6 +43,9 @@ class _ScanState extends State<Scan> {
                 url,
                 width: 300,
               ),
+              const SizedBox(
+                height: 3,
+              ),
               Text('Roll No: ${data['rollNo']}'),
               Text('Branch: ${data['branch']}'),
               Text('Room: ${data['room']}'),
@@ -75,7 +78,7 @@ class _ScanState extends State<Scan> {
                 }
 
                 var response = await http.post(
-                    Uri.parse('http://localhost:3000/$entryType'),
+                    Uri.parse('https://scanago.onrender.com/$entryType'),
                     headers: {"Content-Type": "application/json"},
                     body: jsonEncode(body));
 

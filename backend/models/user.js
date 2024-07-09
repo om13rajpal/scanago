@@ -14,17 +14,17 @@ const userSchema = new mongoose.Schema({
 
   phoneNo: {
     type: String,
-    default: "8950291327",
+    default: "1234567890",
   },
 
   rollNo: {
     type: String,
-    default: "102316071",
+    default: "123456789",
   },
 
   name: {
     type: String,
-    default: "Om Rajpal",
+    default: "Franklin",
   },
 
   branch: {
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
 
   room: {
     type: String,
-    default: "120",
+    default: "001",
   },
 
   homeEntry: [{
@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
 
   image: {
     type: String,
-    default: "https://res.cloudinary.com/dvhwz7ptr/image/upload/wahswfysi62covjwfzcd.webp"
+    default: "https://res.cloudinary.com/dvhwz7ptr/image/upload/v1720547605/pngwing.com_1_zk9ic6.png"
   }
 
 });

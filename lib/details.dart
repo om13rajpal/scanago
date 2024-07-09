@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  String? _uploadedImageUrl;
+  String? _uploadedImageUrl = "https://res.cloudinary.com/dvhwz7ptr/image/upload/v1720547605/pngwing.com_1_zk9ic6.png";
 
   Future<void> pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -92,39 +93,54 @@ class _DetailsState extends State<Details> {
       'image': _uploadedImageUrl,
     };
 
-    var response = await http.post(
-      Uri.parse('https://scanago.onrender.com/updateDetails'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(body),
-    );
-
-    var jsonRes = await jsonDecode(response.body);
-
-    if (jsonRes['status']) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      await prefs.remove('token');
-      await prefs.setString('token', jsonRes['token']);
-      token = prefs.getString('token');
-
-      Fluttertoast.showToast(
-        msg: "Entry Saved",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0,
+    if (name.text.isNotEmpty &&
+        phoneNo.text.isNotEmpty &&
+        room.text.isNotEmpty &&
+        rollNo.text.isNotEmpty) {
+      var response = await http.post(
+        Uri.parse('https://scanago.onrender.com/updateDetails'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body),
       );
-      if (!context.mounted) return;
 
-      Navigator.pushReplacement(
-        context,
-        _createFadeRoute(Dashboard(token: token)),
-      );
+      var jsonRes = await jsonDecode(response.body);
+
+      if (jsonRes['status']) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        await prefs.remove('token');
+        await prefs.setString('token', jsonRes['token']);
+        token = prefs.getString('token');
+
+        Fluttertoast.showToast(
+          msg: "Entry Saved",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        if (!context.mounted) return;
+
+        Navigator.pushReplacement(
+          context,
+          _createFadeRoute(Dashboard(token: token)),
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "could not save data",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
     } else {
       Fluttertoast.showToast(
-        msg: "could not save data",
+        msg: "Please fill all the fields",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

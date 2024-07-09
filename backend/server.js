@@ -7,7 +7,6 @@ const { entryRouter } = require("./routes/entry");
 const { detailsRoute } = require("./routes/details");
 const sanitize = require("express-mongo-sanitize")
 
-
 dotenv.config();
 
 const app = express();
@@ -27,14 +26,11 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(sanitize());
 
+connectMongo();
 
 app.use(authRoute);
 app.use(entryRouter);
 app.use(detailsRoute);
-
-
-connectMongo();
-
 
 app.get("/", (req, res)=>{
   res.send("Welcome to Scanago. The backend is up and working properly :D")
