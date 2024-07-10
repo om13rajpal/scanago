@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +23,8 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  String? _uploadedImageUrl = "https://res.cloudinary.com/dvhwz7ptr/image/upload/v1720547605/pngwing.com_1_zk9ic6.png";
+  String? _uploadedImageUrl =
+      "https://res.cloudinary.com/dvhwz7ptr/image/upload/v1720547605/pngwing.com_1_zk9ic6.png";
 
   Future<void> pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -107,6 +107,11 @@ class _DetailsState extends State<Details> {
 
       if (jsonRes['status']) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        var body = {"endUser": email, "name": name.text};
+        http.post(Uri.parse('https://scanago.onrender.com/sendMail'),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(body));
 
         await prefs.remove('token');
         await prefs.setString('token', jsonRes['token']);
