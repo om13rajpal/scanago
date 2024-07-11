@@ -4,10 +4,10 @@ const rateLimit = require("express-rate-limit");
 const { connectMongo } = require("./db/db");
 const { authRoute } = require("./routes/auth");
 const { entryRouter } = require("./routes/entry");
-const { detailsRoute } = require("./routes/details");
 const sanitize = require("express-mongo-sanitize");
 const { mailRoute } = require("./routes/mail");
 const { userDetailsRoute } = require("./routes/userDetails");
+const { detailsRoute } = require("./routes/entryDetails");
 
 dotenv.config();
 
