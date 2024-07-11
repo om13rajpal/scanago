@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
         if (!context.mounted) return;
 
         Navigator.of(context)
-            .pushReplacement(_createFadeRoute(Details(token: myToken)));
+            .pushReplacement(_createFadeRoute(Details(token: myToken, saveType: 'save',)));
       }
     }
   }

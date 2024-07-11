@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/button.dart';
+import 'package:scanago/details.dart';
 import 'package:scanago/entryList.dart';
 import 'package:scanago/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +22,20 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  late SharedPreferences prefs;
+  late String token;
+
+  void initSharedPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+  }
+
+  @override
+  void initState() {
+    initSharedPrefs();
+    super.initState();
+  }
+
   Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
@@ -146,6 +161,22 @@ class _AccountState extends State<Account> {
                         radius: 12,
                         fontSize: 12),
                   ),
+                  SizedBox(
+                    height: 40,
+                    child: Button(
+                        text: 'Update Details',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            _createFadeRoute(Details(
+                              token: token,
+                              saveType: 'update',
+                            )),
+                          );
+                        },
+                        radius: 12,
+                        fontSize: 12),
+                  ),
                 ],
               ),
             ),
@@ -176,4 +207,3 @@ class _AccountState extends State<Account> {
     );
   }
 }
-  

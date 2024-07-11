@@ -31,7 +31,9 @@ async function addDetails(req, res, next) {
     );
 
     if (!updatedUser) {
-      return res.status(500).json({ status: false, message: "Could not update details" });
+      return res
+        .status(500)
+        .json({ status: false, message: "Could not update details" });
     }
 
     const tokenData = {
@@ -46,18 +48,22 @@ async function addDetails(req, res, next) {
     };
 
     const token = generateToken(tokenData, secretKey, "1h");
-    
+
     return res.status(200).json({
       status: true,
       message: "Details updated successfully",
       token: token,
     });
-
   } catch (error) {
-    return res.status(500).json({ status: false, message: "An error occurred", error: error.message });
+    return res
+      .status(500)
+      .json({
+        status: false,
+        message: "An error occurred",
+        error: error.message,
+      });
   }
 }
-
 
 async function listHomeEntry(req, res, next) {
   try {
@@ -136,11 +142,42 @@ async function getAllLocalList(req, res, next) {
   res.json({ status: true, allLocalEntry: localEntry });
 }
 
+async function updateDetails(req, res, next) {
+  const { email, name, phoneNo, room, Rollno, branch, image } = req.body;
+  const updateFields = {};
+
+  if (name) updateFields.name = name;
+  if (phoneNo) updateFields.phoneNo = phoneNo;
+  if (room) updateFields.room = room;
+  if (Rollno) updateFields.rollno = Rollno;
+  if (branch) updateFields.branch = branch;
+  if (image) updateFields.image = image;
+
+  console.log(updateFields);
+
+  const user = await userModel.findOneAndUpdate(
+    { email: email },
+    updateFields,
+    { new: true }
+  );
+
+  if (!user) {
+    res
+      .status(500)
+      .json({ status: false, message: "Could not update details" });
+    return;
+  }
+  console.log(user);
+
+  res.json({ status: true, message: "details updated" });
+}
+
 detailsRoute.post("/listHomeEntry", listHomeEntry);
 detailsRoute.post("/listLocalEntry", listLocalEntry);
 detailsRoute.post("/allHomeEntry", getAllHomeList);
 detailsRoute.post("/allLocalEntry", getAllLocalList);
 detailsRoute.post("/updateDetails", addDetails);
+detailsRoute.post("/updateNewDetails", updateDetails);
 
 module.exports = {
   detailsRoute: detailsRoute,

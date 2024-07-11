@@ -14,7 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Details extends StatefulWidget {
   final String token;
-  const Details({super.key, required this.token});
+  final String saveType;
+  const Details({super.key, required this.token, required this.saveType});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -161,6 +162,43 @@ class _DetailsState extends State<Details> {
         backgroundColor: Colors.black,
         textColor: Colors.white,
         fontSize: 16.0,
+      );
+    }
+  }
+
+  Future<void> updateData(BuildContext context) async {
+    var body = {
+      'email': email,
+      'name': name.text,
+      'phoneNo': phoneNo.text,
+      'room': room.text,
+      'rollNo': rollNo.text,
+      'branch': (_selectedValue == 1) ? 'CSE' : 'MBA',
+      'image': _uploadedImageUrl,
+    };
+
+    var response = await http.post(
+        Uri.parse('https://scanago.onrender.com/updateNewDetails'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body));
+
+    var jsonRes = await jsonDecode(response.body);
+    if (jsonRes['status']) {
+      Fluttertoast.showToast(
+        msg: "Entry Updated",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      if (!context.mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        _createFadeRoute(Dashboard(token: token)),
       );
     }
   }
@@ -352,7 +390,9 @@ class _DetailsState extends State<Details> {
                   Button(
                       text: 'Save',
                       onPressed: () {
-                        saveData(context);
+                        (widget.saveType == 'save')
+                            ? saveData(context)
+                            : updateData(context);
                       },
                       radius: 12,
                       fontSize: 12)

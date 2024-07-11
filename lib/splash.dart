@@ -27,7 +27,7 @@ class _SplashState extends State<Splash> {
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved == true) {
       nextPage = Dashboard(token: widget.token);
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved != true) {
-      nextPage = Details(token: widget.token!);
+      nextPage = Details(token: widget.token!, saveType: 'save',);
     } else {
       nextPage = const Login();
     }
