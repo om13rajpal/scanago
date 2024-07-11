@@ -197,12 +197,23 @@ class _DetailsState extends State<Details> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
       await prefs.setString('token', jsonRes['token']);
+      setState(() {});
 
       if (!context.mounted) return;
 
       Navigator.pushReplacement(
         context,
         _createFadeRoute(Dashboard(token: token)),
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Could not update entry",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }

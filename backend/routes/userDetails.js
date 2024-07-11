@@ -72,8 +72,6 @@ async function updateDetails(req, res, next) {
   if (branch) updateFields.branch = branch;
   if (image) updateFields.image = image;
 
-  console.log(updateFields);
-
   const updatedUser = await userModel.findOneAndUpdate(
     { email: email },
     updateFields,
