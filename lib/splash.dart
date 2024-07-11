@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:scanago/dashboard.dart';
+import 'package:scanago/details.dart';
 import 'package:scanago/login.dart';
 import 'package:scanago/scan.dart';
 
 class Splash extends StatefulWidget {
   final String isLoggedIn;
   final String? token;
-  const Splash({super.key, required this.isLoggedIn, this.token});
+  final bool? dataSaved;
+  const Splash(
+      {super.key, required this.isLoggedIn, this.token, this.dataSaved});
 
   @override
   State<Splash> createState() => _SplashState();
@@ -21,8 +24,10 @@ class _SplashState extends State<Splash> {
     Widget nextPage;
     if (widget.isLoggedIn == 'admin') {
       nextPage = const Scan();
-    } else if (widget.isLoggedIn == 'yes') {
+    } else if (widget.isLoggedIn == 'yes' && widget.dataSaved == true) {
       nextPage = Dashboard(token: widget.token);
+    } else if (widget.isLoggedIn == 'yes' && widget.dataSaved != true) {
+      nextPage = Details(token: widget.token!);
     } else {
       nextPage = const Login();
     }

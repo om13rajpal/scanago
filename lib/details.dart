@@ -115,6 +115,7 @@ class _DetailsState extends State<Details> {
 
         await prefs.remove('token');
         await prefs.setString('token', jsonRes['token']);
+        await prefs.setBool('dataSaved', true);
         token = prefs.getString('token');
 
         Fluttertoast.showToast(

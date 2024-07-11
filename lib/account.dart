@@ -24,6 +24,7 @@ class _AccountState extends State<Account> {
   Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    await prefs.remove('dataSaved');
 
     if (!context.mounted) return;
 

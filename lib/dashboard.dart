@@ -39,6 +39,7 @@ class _DashboardState extends State<Dashboard> {
   Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    await prefs.remove('dataSaved');
 
     if (!context.mounted) return;
 

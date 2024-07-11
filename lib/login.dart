@@ -46,6 +46,7 @@ class _LoginState extends State<Login> {
       if (jsonRes['status']) {
         var myToken = jsonRes['token'];
         await prefs.setString('token', myToken);
+        await prefs.setBool('dataSaved', true);
         if (!context.mounted) return;
         bool admin = false;
         if (email.text == 'admin@gmail.com') {

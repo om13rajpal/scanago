@@ -7,14 +7,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('token');
+  bool? dataSaved = prefs.getBool('dataSaved');
   runApp(Scanago(
     token: token,
+    dataSaved: dataSaved,
   ));
 }
 
 class Scanago extends StatefulWidget {
   final dynamic token;
-  const Scanago({super.key, this.token});
+  final bool? dataSaved;
+  const Scanago({super.key, this.token, required this.dataSaved});
 
   @override
   State<Scanago> createState() => _ScanagoState();
@@ -50,8 +53,14 @@ class _ScanagoState extends State<Scanago> {
       home: (loggedIn)
           ? (email == 'admin@gmail.com')
               ? Splash(isLoggedIn: 'admin', token: widget.token)
-              : Splash(isLoggedIn: 'yes', token: widget.token,)
-          : const Splash(isLoggedIn: 'no',),
+              : Splash(
+                  isLoggedIn: 'yes',
+                  token: widget.token,
+                  dataSaved: widget.dataSaved,
+                )
+          : const Splash(
+              isLoggedIn: 'no',
+            ),
     );
   }
 }
