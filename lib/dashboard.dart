@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/account.dart';
 import 'package:scanago/login.dart';
 import 'package:scanago/qrcode.dart';
+import 'package:scanago/verifymail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
   final dynamic token;
@@ -33,6 +37,8 @@ class _DashboardState extends State<Dashboard> {
     branch = decodedToken['branch'];
     image = decodedToken['image'];
 
+    checkVerification(email, context);
+
     super.initState();
   }
 
@@ -44,6 +50,24 @@ class _DashboardState extends State<Dashboard> {
     if (!context.mounted) return;
 
     Navigator.pushReplacement(context, _createFadeRoute(const Login()));
+  }
+
+  void checkVerification(String email, BuildContext context) async {
+    var body = {"email": email};
+    var response = await http.post(
+        Uri.parse('https://scanago.onrender.com/checkVerification'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body));
+
+    var jsonRes = await jsonDecode(response.body);
+    if (jsonRes['status']) {
+      bool isVerified = jsonRes['isVerified'];
+      if (!isVerified) {
+        if (!context.mounted) return;
+        Navigator.pushReplacement(
+            context, _createFadeRoute(VerifyMail(email: email)));
+      }
+    }
   }
 
   Route _createFadeRoute(Widget page) {

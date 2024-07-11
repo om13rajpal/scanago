@@ -96,8 +96,25 @@ async function login(req, res, next) {
   } catch (error) {}
 }
 
+async function ismailVerified(req, res, next){
+  const {email} = req.body;
+
+  const user = await userModel.findOne({email: email})
+
+  if(!user){
+    res.status(500).json({status: true, message: "user not found"})
+  }
+
+  const isVerified = user.isVerified;
+
+  res.json({status: true, isVerified: isVerified})
+
+
+}
+
 route.post("/register", register);
 route.post("/login", login);
+route.post("/checkVerification", ismailVerified);
 
 module.exports = {
   authRoute: route,

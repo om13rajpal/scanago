@@ -127,6 +127,14 @@ class _DetailsState extends State<Details> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+
+        var emailbody = {"email": email};
+
+        await http.post(
+            Uri.parse('https://scanago.onrender.com/sendVerificationMail'),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(emailbody));
+
         if (!context.mounted) return;
 
         Navigator.pushReplacement(

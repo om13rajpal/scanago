@@ -50,6 +50,11 @@ const userSchema = new mongoose.Schema({
   image: {
     type: String,
     default: "https://res.cloudinary.com/dvhwz7ptr/image/upload/v1720547605/pngwing.com_1_zk9ic6.png"
+  },
+
+  isVerified: {
+    type: Boolean,
+    default: false
   }
 
 });
