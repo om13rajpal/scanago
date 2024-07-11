@@ -52,7 +52,7 @@ class _VerifyMailState extends State<VerifyMail> {
                 'your email is not verified Please verify your mail',
                 style: TextStyle(
                     fontFamily: 'monkey',
-                    fontSize: 15,
+                    fontSize: 20,
                     fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),

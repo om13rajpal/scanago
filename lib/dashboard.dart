@@ -5,7 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/account.dart';
 import 'package:scanago/login.dart';
 import 'package:scanago/qrcode.dart';
-import 'package:scanago/verifymail.dart';
+import 'package:scanago/verify_mail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

@@ -30,11 +30,24 @@ class QrCodeView extends StatefulWidget {
 
 class _QrCodeState extends State<QrCodeView> {
   late DateTime now;
+  late Duration timeLeft;
   TextEditingController reason = TextEditingController();
   @override
   void initState() {
     now = DateTime.now();
+    calculateTimeLeft();
     super.initState();
+  }
+
+  void calculateTimeLeft() {
+    if (now.isAfter(DateTime(now.year, now.month, now.day, 22, 0, 1)) ||
+        now.isBefore(DateTime(now.year, now.month, now.day, 5, 30, 0))) {
+      timeLeft = Duration.zero;
+    } else {
+      final DateTime totaltime =
+          DateTime(DateTime.now().year, now.month, now.day, 22, 0, 0);
+      timeLeft = totaltime.difference(now);
+    }
   }
 
   @override
@@ -66,6 +79,24 @@ class _QrCodeState extends State<QrCodeView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      (timeLeft == Duration.zero)
+                          ? const Text(
+                              'In/Out time is over for today',
+                              style: TextStyle(
+                                  fontFamily: 'monkey',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : Text(
+                              '${timeLeft.inHours}h : ${timeLeft.inMinutes % 60}m Left',
+                              style: const TextStyle(
+                                  fontFamily: 'monkey',
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       TextField(
                         controller: reason,
                         decoration: InputDecoration(
