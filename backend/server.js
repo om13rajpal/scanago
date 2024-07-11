@@ -7,6 +7,7 @@ const { entryRouter } = require("./routes/entry");
 const { detailsRoute } = require("./routes/details");
 const sanitize = require("express-mongo-sanitize");
 const { mailRoute } = require("./routes/mail");
+const { userDetailsRoute } = require("./routes/userDetails");
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(authRoute);
 app.use(entryRouter);
 app.use(detailsRoute);
 app.use(mailRoute);
+app.use(userDetailsRoute);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Scanago. The backend is up and working properly :D");
