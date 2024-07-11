@@ -15,7 +15,6 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
@@ -25,6 +24,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.use(sanitize());
+app.use(express.json());
 
 connectMongo();
 

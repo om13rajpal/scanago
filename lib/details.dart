@@ -194,6 +194,10 @@ class _DetailsState extends State<Details> {
         fontSize: 16.0,
       );
 
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('token');
+      await prefs.setString('token', jsonRes['token']);
+
       if (!context.mounted) return;
 
       Navigator.pushReplacement(

@@ -74,21 +74,34 @@ async function updateDetails(req, res, next) {
 
   console.log(updateFields);
 
-  const user = await userModel.findOneAndUpdate(
+  const updatedUser = await userModel.findOneAndUpdate(
     { email: email },
     updateFields,
     { new: true }
   );
 
-  if (!user) {
+  if (!updatedUser) {
     res
       .status(500)
       .json({ status: false, message: "Could not update details" });
     return;
   }
+
+  const tokenData = {
+    _id: updatedUser._id,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    rollNo: updatedUser.rollNo,
+    branch: updatedUser.branch,
+    phoneNo: updatedUser.phoneNo,
+    room: updatedUser.room,
+    image: updatedUser.image,
+  };
+
+  const token = generateToken(tokenData, secretKey, "1h");
   console.log(user);
 
-  res.json({ status: true, message: "details updated" });
+  res.json({ status: true, message: "details updated", token: token });
 }
 
 userDetailsRoute.post("/updateDetails", addDetails);
