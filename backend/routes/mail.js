@@ -91,7 +91,7 @@ async function verifyMail(req, res, next){
 
 mailRoute.post("/sendMail", sendMailToUser);
 mailRoute.post("/sendVerificationMail", sendVerificationMail);
-mailRoute.post("/verifyMail", verifyMail);
+mailRoute.get("/verifyMail", verifyMail);
 
 module.exports = {
   mailRoute: mailRoute,

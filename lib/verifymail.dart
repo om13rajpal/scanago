@@ -22,18 +22,17 @@ class _VerifyMailState extends State<VerifyMail> {
         body: jsonEncode(body));
 
     var jsonRes = jsonDecode(response.body);
-    if(jsonRes['status']){
+    if (jsonRes['status']) {
       Fluttertoast.showToast(
-          msg: "Entry Saved",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        msg: "Sent the email",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
-
   }
 
   @override
@@ -46,11 +45,25 @@ class _VerifyMailState extends State<VerifyMail> {
         color: const Color(0xFFF8F4EA),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('your email is not verified Please verify your mail'),
+              const Text(
+                'your email is not verified Please verify your mail',
+                style: TextStyle(
+                    fontFamily: 'monkey',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               Button(
                   text: 'Resend Verification Mail',
-                  onPressed: () {},
+                  onPressed: () {
+                    sendVerificationMail();
+                  },
                   radius: 12,
                   fontSize: 12)
             ],
