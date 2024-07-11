@@ -99,7 +99,6 @@ async function updateDetails(req, res, next) {
   };
 
   const token = generateToken(tokenData, secretKey, "1h");
-  console.log(user);
 
   res.json({ status: true, message: "details updated", token: token });
 }
