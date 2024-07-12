@@ -71,6 +71,10 @@ The backend of Scanago is built with Node.js, Express, and MongoDB. Follow these
     ```env
     PORT=3000
     MONGO_URI=your_mongodb_connection_string
+    SECRET_KEY=your_secret_key
+    EMAIL=your_email
+    PASSWORD=your_password
+    EMAIL_KEY=email_secret_ky
     ```
 
 3. **Start the backend server:**
