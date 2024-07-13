@@ -2,14 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mime/mime.dart';
 import 'package:scanago/templates/button.dart';
 import 'package:scanago/dashboard.dart';
+import 'package:scanago/templates/caption_style.dart';
+import 'package:scanago/templates/textfield.dart';
 import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -240,183 +244,141 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xFFF8F4EA),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xfff3f3f3), Color(0xffd8d8d8)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: MediaQuery.of(context).size.width,
-              child: const Center(
-                child: Text(
-                  'Scanago',
-                  style: TextStyle(
-                      fontFamily: 'monkey',
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
+            Transform.translate(
+              offset: Offset(screenWidth * 0.25, 0),
+              child: LottieBuilder.asset(
+                'assets/lottie/run.json',
+                width: screenWidth,
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.85,
-              height: MediaQuery.of(context).size.height * 0.70,
+            SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextField(
-                    controller: name,
-                    decoration: InputDecoration(
-                      hintText: 'Name',
-                      prefixIcon: const Icon(
-                        Icons.account_circle,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(230, 0, 0, 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: Colors.white60,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width,
+                    child: const Center(
+                      child: Text(
+                        'Scanago',
+                        style: TextStyle(
+                            fontFamily: 'monkey',
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                    style: const TextStyle(color: Colors.white),
                   ),
-                  TextField(
-                    controller: phoneNo,
-                    decoration: InputDecoration(
-                      hintText: 'Phone Number',
-                      prefixIcon: const Icon(
-                        Icons.phone,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(230, 0, 0, 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: Colors.white60,
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  TextField(
-                    controller: room,
-                    decoration: InputDecoration(
-                      hintText: 'Room',
-                      prefixIcon: const Icon(
-                        Icons.room,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(230, 0, 0, 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: Colors.white60,
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  TextField(
-                    controller: rollNo,
-                    decoration: InputDecoration(
-                      hintText: 'Roll Number',
-                      prefixIcon: const Icon(
-                        Icons.numbers,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromARGB(230, 0, 0, 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: Colors.white60,
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Radio(
-                            value: 1,
-                            groupValue: _selectedValue,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedValue = value;
-                              });
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Textfield(
+                          controller: name,
+                          hintText: 'Name',
+                          screenWidth: screenWidth,
+                          obscure: false,
+                          prefixIcon: Icons.account_circle,
+                        ),
+                        Textfield(
+                          controller: phoneNo,
+                          hintText: 'Phone Number',
+                          screenWidth: screenWidth,
+                          obscure: false,
+                          prefixIcon: Icons.phone,
+                        ),
+                        Textfield(
+                          controller: rollNo,
+                          hintText: 'Roll Number',
+                          screenWidth: screenWidth,
+                          obscure: false,
+                          prefixIcon: Icons.confirmation_number,
+                        ),
+                        Textfield(
+                          controller: room,
+                          hintText: 'Room Number',
+                          screenWidth: screenWidth,
+                          obscure: false,
+                          prefixIcon: Icons.room,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: _selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValue = value;
+                                    });
+                                  },
+                                ),
+                                CaptionStyle(
+                                    textColor: const Color(0xff747474),
+                                    text: 'CSE',
+                                    fontSize: screenWidth * 0.04)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 2,
+                                  groupValue: _selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValue = value;
+                                    });
+                                  },
+                                ),
+                                CaptionStyle(
+                                    textColor: const Color(0xff747474),
+                                    text: 'MBA',
+                                    fontSize: screenWidth * 0.04)
+                              ],
+                            ),
+                          ],
+                        ),
+                        Button(
+                          onPressed: pickImage,
+                          text: imagebutton,
+                          fontSize: screenWidth * 0.035,
+                          radius: 12,
+                        ),
+                        Button(
+                            text: 'Save',
+                            onPressed: () {
+                              (widget.saveType == 'save')
+                                  ? saveData(context)
+                                  : updateData(context);
                             },
-                          ),
-                          const Text(
-                            'CSE',
-                            style: TextStyle(
-                                fontFamily: 'monkey',
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: 2,
-                            groupValue: _selectedValue,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedValue = value;
-                              });
-                            },
-                          ),
-                          const Text(
-                            'MBA',
-                            style: TextStyle(
-                                fontFamily: 'monkey',
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ],
+                            radius: 12,
+                            fontSize: screenWidth * 0.035)
+                      ],
+                    ),
                   ),
-                  Button(
-                    onPressed: pickImage,
-                    text: imagebutton,
-                    fontSize: 12,
-                    radius: 12,
-                  ),
-                  Button(
-                      text: 'Save',
-                      onPressed: () {
-                        (widget.saveType == 'save')
-                            ? saveData(context)
-                            : updateData(context);
-                      },
-                      radius: 12,
-                      fontSize: 12)
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
