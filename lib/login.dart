@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/scan.dart';
 import 'package:scanago/signup.dart';
+import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,6 +49,8 @@ class _LoginState extends State<Login> {
         var myToken = jsonRes['token'];
         await prefs.setString('token', myToken);
         await prefs.setBool('dataSaved', true);
+        setUserInfo(JwtDecoder.decode(myToken));
+
         if (!context.mounted) return;
         bool admin = false;
         if (email.text == 'admin@gmail.com') {

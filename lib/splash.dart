@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:lottie/lottie.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/details.dart';
 import 'package:scanago/login.dart';
 import 'package:scanago/scan.dart';
+import 'package:scanago/utils/user_data.dart';
 
 class Splash extends StatefulWidget {
   final String isLoggedIn;
@@ -25,9 +27,13 @@ class _SplashState extends State<Splash> {
     if (widget.isLoggedIn == 'admin') {
       nextPage = const Scan();
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved == true) {
+      setUserInfo(JwtDecoder.decode(widget.token!));
       nextPage = Dashboard(token: widget.token);
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved != true) {
-      nextPage = Details(token: widget.token!, saveType: 'save',);
+      nextPage = Details(
+        token: widget.token!,
+        saveType: 'save',
+      );
     } else {
       nextPage = const Login();
     }

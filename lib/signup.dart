@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/details.dart';
 import 'package:scanago/login.dart';
+import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,10 +45,13 @@ class _SignUpState extends State<SignUp> {
       if (jsonRes['status']) {
         var myToken = jsonRes['token'];
         await prefs.setString("token", myToken);
+        setUserInfo(JwtDecoder.decode(myToken));
         if (!context.mounted) return;
 
-        Navigator.of(context)
-            .pushReplacement(_createFadeRoute(Details(token: myToken, saveType: 'save',)));
+        Navigator.of(context).pushReplacement(_createFadeRoute(Details(
+          token: myToken,
+          saveType: 'save',
+        )));
       }
     }
   }

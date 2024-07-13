@@ -10,6 +10,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mime/mime.dart';
 import 'package:scanago/button.dart';
 import 'package:scanago/dashboard.dart';
+import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Details extends StatefulWidget {
@@ -116,6 +117,8 @@ class _DetailsState extends State<Details> {
 
         await prefs.remove('token');
         await prefs.setString('token', jsonRes['token']);
+        setUserInfo(JwtDecoder.decode(jsonRes['token']));
+
         await prefs.setBool('dataSaved', true);
         token = prefs.getString('token');
 
