@@ -9,13 +9,15 @@ class GridContent extends StatefulWidget {
   final String subtitle;
   final String svgPath;
   final Widget? page;
+  final double screenWidth;
   const GridContent(
       {super.key,
       required this.bgColor,
       required this.title,
       required this.subtitle,
       required this.svgPath,
-      required this.page});
+      required this.page,
+      required this.screenWidth});
 
   @override
   State<GridContent> createState() => _GridContentState();
@@ -40,20 +42,20 @@ class _GridContentState extends State<GridContent> {
           children: [
             SvgPicture.asset(
               widget.svgPath,
-              width: 22,
+              width: widget.screenWidth * 0.07,
             ),
             Text(
               widget.title,
-              style: const TextStyle(
+              style: TextStyle(
                   fontFamily: 'inter',
-                  fontSize: 11.5,
+                  fontSize: widget.screenWidth * 0.035,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xff0e0e0e)),
+                  color: const Color(0xff0e0e0e)),
             ),
             CaptionStyle(
                 textColor: const Color(0xff747474),
                 text: widget.subtitle,
-                fontSize: 9.2)
+                fontSize: widget.screenWidth * 0.028)
           ],
         ),
       ),

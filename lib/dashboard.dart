@@ -34,6 +34,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -50,7 +52,10 @@ class _DashboardState extends State<Dashboard> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TopDashboard(name: name!),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                ),
+                TopDashboard(name: name!, screenWidth: screenWidth),
                 const SizedBox(
                   height: 12,
                 ),
@@ -66,61 +71,59 @@ class _DashboardState extends State<Dashboard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CaptionStyle(
-                        textColor: Color(0xff8c8c8c),
+                    CaptionStyle(
+                        textColor: const Color(0xff8c8c8c),
                         text: 'Here are some things you can do',
-                        fontSize: 11),
+                        fontSize: screenWidth * 0.03),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Grid(),
+                    Grid(screenWidth: screenWidth),
                     const SizedBox(
                       height: 32,
                     ),
                     TimeLeft(
                       timeLeft: timeLeft,
+                      screenWidth: screenWidth,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const CaptionStyle(
-                        textColor: Color(0xff8c8c8c),
+                    CaptionStyle(
+                        textColor: const Color(0xff8c8c8c),
                         text: 'Unlock campus with a scan :D',
-                        fontSize: 11),
+                        fontSize: screenWidth * 0.03),
                     Transform.translate(
                       offset: const Offset(0, -20),
                       child: SizedBox(
                         height: 100,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             LottieBuilder.asset(
                               'assets/lottie/dino.json',
                               width: MediaQuery.of(context).size.width * 0.4,
                               fit: BoxFit.cover,
                             ),
-                            Transform.translate(
-                              offset: const Offset(0, 7),
-                              child: CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: const Color(0xff3b3b3b),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          createFadeRoute(Account(
-                                              email: email!,
-                                              name: name!,
-                                              branch: branch!,
-                                              rollNo: rollNo!)));
-                                    },
-                                    child: SvgPicture.asset(
-                                      'assets/images/account.svg',
-                                      width: 20,
-                                    ),
-                                  )),
-                            )
+                            CircleAvatar(
+                                radius: 20,
+                                backgroundColor: const Color(0xff3b3b3b),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        createFadeRoute(Account(
+                                            email: email!,
+                                            name: name!,
+                                            branch: branch!,
+                                            rollNo: rollNo!)));
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/images/account.svg',
+                                    width: 20,
+                                  ),
+                                )),
                           ],
                         ),
                       ),

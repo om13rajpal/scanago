@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanago/button.dart';
+import 'package:scanago/templates/button.dart';
 import 'package:scanago/details.dart';
 import 'package:scanago/entryList.dart';
 import 'package:scanago/login.dart';

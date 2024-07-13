@@ -1,14 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:scanago/button.dart';
-import 'package:scanago/dashboard.dart';
-import 'package:scanago/scan.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:scanago/templates/button.dart';
 import 'package:scanago/signup.dart';
-import 'package:scanago/utils/user_data.dart';
+import 'package:scanago/templates/caption_style.dart';
+import 'package:scanago/templates/textfield.dart';
+import 'package:scanago/utils/login_signup.dart';
+import 'package:scanago/utils/route_animation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,53 +32,9 @@ class _LoginState extends State<Login> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> loginUser(BuildContext context) async {
-    if (email.text.isNotEmpty && password.text.isNotEmpty) {
-      var body = {
-        "email": email.text.trim(),
-        "password": password.text.trim(),
-      };
-
-      var response = await http.post(
-          Uri.parse('https://scanago.onrender.com/login'),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(body));
-
-      var jsonRes = jsonDecode(response.body);
-      if (jsonRes['status']) {
-        var myToken = jsonRes['token'];
-        await prefs.setString('token', myToken);
-        await prefs.setBool('dataSaved', true);
-        setUserInfo(JwtDecoder.decode(myToken));
-
-        if (!context.mounted) return;
-        bool admin = false;
-        if (email.text == 'admin@gmail.com') {
-          admin = true;
-        }
-
-        Navigator.pushReplacement(
-          context,
-          _createFadeRoute(admin ? const Scan() : Dashboard(token: myToken)),
-        );
-      }
-    }
-  }
-
-  Route _createFadeRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
       statusBarIconBrightness: Brightness.light,
@@ -88,145 +44,111 @@ class _LoginState extends State<Login> {
         body: Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: const Color(0xFFF8F4EA),
+      padding: const EdgeInsets.only(left: 25),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xfff3f3f3), Color(0xffd8d8d8)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.20,
-            child: const Center(
-              child: Text(
-                'Scanago',
-                style: TextStyle(
-                    fontFamily: 'monkey',
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: Center(
+                child: Text(
+                  'Scanago',
+                  style: TextStyle(
+                      fontFamily: 'inter',
+                      fontSize: screenWidth * 0.08,
+                      color: const Color(0xff262626),
+                      fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.60,
+            height: MediaQuery.of(context).size.height * 0.65,
             child: Stack(
               children: [
                 Container(
                   alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    'assets/images/woman.png',
+                  child: Transform.translate(
+                    offset: Offset(screenWidth * 0.25, 0),
+                    child: Lottie.asset(
+                      'assets/lottie/man.json',
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(right: 25),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Unlock\ncampus\nwith a\nscan',
-                          style: TextStyle(
-                              fontFamily: 'monkey', fontSize: 30, height: 1.2),
+                        CaptionStyle(
+                            textColor: const Color(0xff707070),
+                            text: 'Unlock\ncampus with\na scan :D',
+                            fontSize: screenWidth * 0.037),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Transform.translate(
-                              offset: const Offset(3, 0),
-                              child: const Text(
-                                'Email',
-                                style: TextStyle(
-                                    fontFamily: 'monkey',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            TextField(
+                            Textfield(
                               controller: email,
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                                prefixIcon: const Icon(
-                                  Icons.email,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                filled: true,
-                                fillColor: const Color.fromARGB(230, 0, 0, 0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: Colors.white60,
-                                ),
-                              ),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Transform.translate(
-                              offset: const Offset(3, 0),
-                              child: const Text(
-                                'Password',
-                                style: TextStyle(
-                                    fontFamily: 'monkey',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
+                              hintText: 'Email',
+                              screenWidth: screenWidth,
+                              obscure: false,
+                              prefixIcon: Icons.email,
                             ),
                             const SizedBox(
-                              height: 4,
+                              height: 9,
                             ),
-                            TextField(
+                            Textfield(
                               controller: password,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                hintText: 'Password',
-                                prefixIcon: const Icon(
-                                  Icons.lock,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                filled: true,
-                                fillColor: const Color.fromARGB(230, 0, 0, 0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: Colors.white60,
-                                ),
-                              ),
-                              style: const TextStyle(color: Colors.white),
-                            ),
+                              hintText: 'Password',
+                              screenWidth: screenWidth,
+                              obscure: true,
+                              prefixIcon: Icons.lock,
+                            )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 30,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 35,
-                              width: 91,
+                              height: 32,
+                              width: screenWidth * 0.24,
                               child: Button(
                                   text: 'Login',
                                   onPressed: () {
-                                    loginUser(context);
+                                    loginOrSignupUser(context, prefs, email,
+                                        password, 'login');
                                   },
-                                  radius: 20,
-                                  fontSize: 15),
+                                  radius: 14,
+                                  fontSize: screenWidth * 0.034),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text(
+                                Text(
                                   'New to this app?',
-                                  style: TextStyle(fontFamily: 'monkey '),
+                                  style: TextStyle(
+                                      fontFamily: 'inter',
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xff747474),
+                                      fontSize: screenWidth * 0.032),
                                 ),
                                 const SizedBox(
                                   width: 5,
@@ -234,14 +156,15 @@ class _LoginState extends State<Login> {
                                 InkWell(
                                   onTap: () {
                                     Navigator.push(context,
-                                        _createFadeRoute(const SignUp()));
+                                        createFadeRoute(const SignUp()));
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Sign up',
                                     style: TextStyle(
-                                        fontFamily: 'monkey',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
+                                        fontFamily: 'inter',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: screenWidth * 0.037,
+                                        color: const Color(0xff262626)),
                                   ),
                                 )
                               ],
@@ -249,27 +172,27 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ]),
-                )
+                ),
               ],
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.20,
+            height: MediaQuery.of(context).size.height * 0.15,
             child: Stack(
               children: [
                 Positioned(
-                    bottom: 35,
-                    left: 16,
-                    child: Image.asset(
-                      'assets/images/bottom.png',
-                      width: 120,
+                    bottom: 25,
+                    left: 0,
+                    child: SvgPicture.asset(
+                      'assets/images/fast_transparent.svg',
+                      width: screenWidth * 0.25,
                     )),
                 Positioned(
                     bottom: 0,
                     right: 15,
-                    child: Image.asset(
-                      'assets/images/arrow.png',
-                      width: 220,
+                    child: SvgPicture.asset(
+                      'assets/images/arrow.svg',
+                      width: screenWidth * 0.5,
                     )),
               ],
             ),

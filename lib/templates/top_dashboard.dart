@@ -4,7 +4,9 @@ import 'package:scanago/utils/logout.dart';
 
 class TopDashboard extends StatelessWidget {
   final String name;
-  const TopDashboard({super.key, required this.name});
+  final double screenWidth;
+  const TopDashboard(
+      {super.key, required this.name, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,11 @@ class TopDashboard extends StatelessWidget {
           children: [
             Text(
               'Hi $name,',
-              style: const TextStyle(
+              style: TextStyle(
                   fontFamily: 'inter',
-                  fontSize: 13,
+                  fontSize: screenWidth * 0.035,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff8c8c8c)),
+                  color: const Color(0xff8c8c8c)),
             ),
             InkWell(
               onTap: () {
@@ -28,7 +30,7 @@ class TopDashboard extends StatelessWidget {
               },
               child: SvgPicture.asset(
                 'assets/images/logout-light.svg',
-                width: 17,
+                width: screenWidth * 0.05,
               ),
             )
           ],
@@ -36,32 +38,34 @@ class TopDashboard extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        const Text(
+        Text(
           'Scanago',
           style: TextStyle(
               fontFamily: 'inter',
-              fontSize: 26,
+              fontSize: screenWidth * 0.067,
               fontWeight: FontWeight.w700,
-              color: Color.fromARGB(255, 18, 18, 18)),
+              color: const Color.fromARGB(255, 18, 18, 18)),
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Transform.translate(
-              offset: Offset(0, -1),
+            ClipOval(
               child: SvgPicture.asset(
                 'assets/images/tiet.svg',
-                width: 26,
-                height: 26,
+                width: screenWidth * 0.037,
+                height: screenWidth * 0.037,
               ),
             ),
-            const Text(
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
               'TIET',
               style: TextStyle(
                   fontFamily: 'inter',
-                  fontSize: 12.5,
+                  fontSize: screenWidth * 0.033,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff8c8c8c)),
+                  color: const Color(0xff8c8c8c)),
             ),
             const SizedBox(
               width: 7,

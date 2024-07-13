@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:scanago/button.dart';
+import 'package:scanago/templates/button.dart';
 
 class QrCodeView extends StatefulWidget {
   final String email;

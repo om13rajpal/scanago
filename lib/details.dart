@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mime/mime.dart';
-import 'package:scanago/button.dart';
+import 'package:scanago/templates/button.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';

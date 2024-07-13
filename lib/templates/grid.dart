@@ -4,7 +4,8 @@ import 'package:scanago/templates/grid_content.dart';
 import 'package:scanago/utils/user_data.dart';
 
 class Grid extends StatelessWidget {
-  const Grid({super.key});
+  final double screenWidth;
+  const Grid({super.key, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class Grid extends StatelessWidget {
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
       shrinkWrap: true,
-      childAspectRatio: 8 / 6.7,
+      childAspectRatio: 8 / 6.2,
       children: [
         GridContent(
           bgColor: const Color(0xffE5C7F0),
@@ -29,6 +30,7 @@ class Grid extends StatelessWidget {
               branch: branch!,
               type: 'home',
               image: image),
+          screenWidth: screenWidth,
         ),
         GridContent(
           bgColor: const Color(0xffBDE9C2),
@@ -44,6 +46,7 @@ class Grid extends StatelessWidget {
               branch: branch!,
               type: 'local',
               image: image),
+          screenWidth: screenWidth,
         ),
         GridContent(
           bgColor: const Color(0xffE6D6AE),
@@ -59,6 +62,7 @@ class Grid extends StatelessWidget {
               branch: branch!,
               type: 'home',
               image: image),
+          screenWidth: screenWidth,
         ),
         GridContent(
           bgColor: const Color(0xffDADADA),
@@ -74,6 +78,7 @@ class Grid extends StatelessWidget {
               branch: branch!,
               type: 'local',
               image: image),
+          screenWidth: screenWidth,
         ),
       ],
     );
