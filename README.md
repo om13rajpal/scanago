@@ -74,7 +74,7 @@ The backend of Scanago is built with Node.js, Express, and MongoDB. Follow these
     SECRET_KEY=your_secret_key
     EMAIL=your_email
     PASSWORD=your_password
-    EMAIL_KEY=email_secret_ky
+    EMAIL_KEY=email_secret_key
     ```
 
 3. **Start the backend server:**
