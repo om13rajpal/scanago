@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/qrcode.dart';
 import 'package:scanago/templates/grid_content.dart';
-import 'package:scanago/utils/user_data.dart';
 
 class Grid extends StatelessWidget {
   final double screenWidth;
@@ -21,15 +20,9 @@ class Grid extends StatelessWidget {
           title: 'Home entry',
           subtitle: 'Generate QR code\nto scan and go',
           svgPath: 'assets/images/home.svg',
-          page: QrCodeView(
-              email: email!,
-              name: name!,
-              rollNo: rollNo!,
-              phoneNo: phoneNo!,
-              room: room!,
-              branch: branch!,
-              type: 'home',
-              image: image),
+          page: const QrCodeView(
+            type: 'home',
+          ),
           screenWidth: screenWidth,
         ),
         GridContent(
@@ -37,15 +30,9 @@ class Grid extends StatelessWidget {
           title: 'Local entry',
           subtitle: 'Generate QR code\nto scan and go',
           svgPath: 'assets/images/local.svg',
-          page: QrCodeView(
-              email: email!,
-              name: name!,
-              rollNo: rollNo!,
-              phoneNo: phoneNo!,
-              room: room!,
-              branch: branch!,
-              type: 'local',
-              image: image),
+          page: const QrCodeView(
+            type: 'local',
+          ),
           screenWidth: screenWidth,
         ),
         GridContent(
@@ -53,15 +40,9 @@ class Grid extends StatelessWidget {
           title: 'Night entry',
           subtitle: 'Mark your todays\nnight entry',
           svgPath: 'assets/images/moon.svg',
-          page: QrCodeView(
-              email: email!,
-              name: name!,
-              rollNo: rollNo!,
-              phoneNo: phoneNo!,
-              room: room!,
-              branch: branch!,
-              type: 'home',
-              image: image),
+          page: const QrCodeView(
+            type: 'home',
+          ),
           screenWidth: screenWidth,
         ),
         GridContent(
@@ -69,15 +50,9 @@ class Grid extends StatelessWidget {
           title: 'Food rating',
           subtitle: 'Rate your todays\nmess food',
           svgPath: 'assets/images/food.svg',
-          page: QrCodeView(
-              email: email!,
-              name: name!,
-              rollNo: rollNo!,
-              phoneNo: phoneNo!,
-              room: room!,
-              branch: branch!,
-              type: 'local',
-              image: image),
+          page: const QrCodeView(
+            type: 'local',
+          ),
           screenWidth: screenWidth,
         ),
       ],
