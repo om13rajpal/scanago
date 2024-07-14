@@ -244,125 +244,123 @@ class _DetailsState extends State<Details> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Transform.translate(
-              offset: Offset(screenWidth * 0.25, 0),
-              child: LottieBuilder.asset(
-                'assets/lottie/run.json',
-                width: screenWidth,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
+              child: const Center(
+                child: Text(
+                  'Scanago',
+                  style: TextStyle(
+                      fontFamily: 'monkey',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width,
-                    child: const Center(
-                      child: Text(
-                        'Scanago',
-                        style: TextStyle(
-                            fontFamily: 'monkey',
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
+                  Transform.translate(
+                    offset: Offset(screenWidth * 0.25, -MediaQuery.of(context).size.height * 0.1),
+                    child: LottieBuilder.asset(
+                      'assets/lottie/run.json',
+                      width: screenWidth,
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Textfield(
-                          controller: name,
-                          hintText: 'Name',
-                          screenWidth: screenWidth,
-                          obscure: false,
-                          prefixIcon: Icons.account_circle,
-                        ),
-                        Textfield(
-                          controller: phoneNo,
-                          hintText: 'Phone Number',
-                          screenWidth: screenWidth,
-                          obscure: false,
-                          prefixIcon: Icons.phone,
-                        ),
-                        Textfield(
-                          controller: rollNo,
-                          hintText: 'Roll Number',
-                          screenWidth: screenWidth,
-                          obscure: false,
-                          prefixIcon: Icons.confirmation_number,
-                        ),
-                        Textfield(
-                          controller: room,
-                          hintText: 'Room Number',
-                          screenWidth: screenWidth,
-                          obscure: false,
-                          prefixIcon: Icons.room,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 1,
-                                  groupValue: _selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedValue = value;
-                                    });
-                                  },
-                                ),
-                                CaptionStyle(
-                                    textColor: const Color(0xff747474),
-                                    text: 'CSE',
-                                    fontSize: screenWidth * 0.04)
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 2,
-                                  groupValue: _selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedValue = value;
-                                    });
-                                  },
-                                ),
-                                CaptionStyle(
-                                    textColor: const Color(0xff747474),
-                                    text: 'MBA',
-                                    fontSize: screenWidth * 0.04)
-                              ],
-                            ),
-                          ],
-                        ),
-                        Button(
-                          onPressed: pickImage,
-                          text: imagebutton,
-                          fontSize: screenWidth * 0.035,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Textfield(
+                        controller: name,
+                        hintText: 'Name',
+                        screenWidth: screenWidth,
+                        obscure: false,
+                        prefixIcon: Icons.account_circle,
+                      ),
+                      Textfield(
+                        controller: phoneNo,
+                        hintText: 'Phone Number',
+                        screenWidth: screenWidth,
+                        obscure: false,
+                        prefixIcon: Icons.phone,
+                      ),
+                      Textfield(
+                        controller: rollNo,
+                        hintText: 'Roll Number',
+                        screenWidth: screenWidth,
+                        obscure: false,
+                        prefixIcon: Icons.confirmation_number,
+                      ),
+                      Textfield(
+                        controller: room,
+                        hintText: 'Room Number',
+                        screenWidth: screenWidth,
+                        obscure: false,
+                        prefixIcon: Icons.room,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Radio(
+                                value: 1,
+                                groupValue: _selectedValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedValue = value;
+                                  });
+                                },
+                              ),
+                              CaptionStyle(
+                                  textColor: const Color(0xff747474),
+                                  text: 'CSE',
+                                  fontSize: screenWidth * 0.04)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 2,
+                                groupValue: _selectedValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedValue = value;
+                                  });
+                                },
+                              ),
+                              CaptionStyle(
+                                  textColor: const Color(0xff747474),
+                                  text: 'MBA',
+                                  fontSize: screenWidth * 0.04)
+                            ],
+                          ),
+                        ],
+                      ),
+                      Button(
+                        onPressed: pickImage,
+                        text: imagebutton,
+                        fontSize: screenWidth * 0.035,
+                        radius: 12,
+                      ),
+                      Button(
+                          text: 'Save',
+                          onPressed: () {
+                            (widget.saveType == 'save')
+                                ? saveData(context)
+                                : updateData(context);
+                          },
                           radius: 12,
-                        ),
-                        Button(
-                            text: 'Save',
-                            onPressed: () {
-                              (widget.saveType == 'save')
-                                  ? saveData(context)
-                                  : updateData(context);
-                            },
-                            radius: 12,
-                            fontSize: screenWidth * 0.035)
-                      ],
-                    ),
+                          fontSize: screenWidth * 0.035)
+                    ],
                   ),
                 ],
               ),

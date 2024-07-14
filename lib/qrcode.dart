@@ -6,7 +6,6 @@ import 'package:lottie/lottie.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:scanago/templates/button.dart';
 import 'package:scanago/templates/textfield.dart';
-import 'package:scanago/templates/top_dashboard_account.dart';
 import 'package:scanago/utils/time_left.dart';
 import 'package:scanago/utils/user_data.dart';
 
@@ -47,25 +46,24 @@ class _QrCodeState extends State<QrCodeView> {
           ),
         ),
         padding: const EdgeInsets.only(left: 25, right: 25),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
           children: [
-            LottieBuilder.asset('assets/lottie/run.json'),
-            Column(
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
+                child: Center(
+                  child: Text(
+                    'Scanago',
+                    style: TextStyle(
+                        fontFamily: 'inter',
+                        fontSize: screenwidth * 0.08,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xff353535)),
+                  ),
+                )),
+            Stack(
+              alignment: Alignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                ),
-                TopDashboardAccount(screenWidth: screenwidth),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Divider(
-                  endIndent: 15,
-                  indent: 15,
-                  color: Color(0xffcfcfcf),
-                  thickness: 1,
-                ),
+                LottieBuilder.asset('assets/lottie/run.json'),
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.65,
                     child: Column(
@@ -87,13 +85,6 @@ class _QrCodeState extends State<QrCodeView> {
                             onPressed: () {
                               if (reason.text.isNotEmpty) {
                                 showModalBottomSheet(
-                                  elevation: 1,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20)),
-                                  ),
-                                  isScrollControlled: false,
                                   context: context,
                                   builder: (context) {
                                     return Center(
@@ -116,13 +107,13 @@ class _QrCodeState extends State<QrCodeView> {
                                         padding: const EdgeInsets.all(10),
                                         eyeStyle: const QrEyeStyle(
                                           eyeShape: QrEyeShape.circle,
-                                          color: Color.fromARGB(217, 0, 0, 0),
+                                          color: Colors.black,
                                         ),
                                         dataModuleStyle:
                                             const QrDataModuleStyle(
                                           dataModuleShape:
                                               QrDataModuleShape.circle,
-                                          color: Color.fromARGB(217, 0, 0, 0),
+                                          color: Colors.black,
                                         ),
                                         errorStateBuilder: (cxt, err) {
                                           return const Center(
@@ -144,30 +135,25 @@ class _QrCodeState extends State<QrCodeView> {
                     )),
               ],
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
-                child: Stack(
-                  children: [
-                    Positioned(
-                        bottom: 25,
-                        left: 0,
-                        child: SvgPicture.asset(
-                          'assets/images/fast_transparent.svg',
-                          width: screenwidth * 0.25,
-                        )),
-                    Positioned(
-                        bottom: 0,
-                        right: 15,
-                        child: SvgPicture.asset(
-                          'assets/images/arrow.svg',
-                          width: screenwidth * 0.5,
-                        )),
-                  ],
-                ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: 25,
+                      left: 0,
+                      child: SvgPicture.asset(
+                        'assets/images/fast_transparent.svg',
+                        width: screenwidth * 0.25,
+                      )),
+                  Positioned(
+                      bottom: 0,
+                      right: 15,
+                      child: SvgPicture.asset(
+                        'assets/images/arrow.svg',
+                        width: screenwidth * 0.5,
+                      )),
+                ],
               ),
             )
           ],
