@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scanago/templates/button.dart';
-import 'package:scanago/details.dart';
-import 'package:scanago/entryList.dart';
-import 'package:scanago/login.dart';
+import 'package:scanago/templates/caption_style.dart';
+import 'package:scanago/templates/grid_account.dart';
+import 'package:scanago/templates/top_dashboard_account.dart';
+import 'package:scanago/utils/time_left.dart';
+import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
@@ -10,12 +11,14 @@ class Account extends StatefulWidget {
   final String name;
   final String branch;
   final String rollNo;
+  final String token;
   const Account(
       {super.key,
       required this.email,
       required this.name,
       required this.branch,
-      required this.rollNo});
+      required this.rollNo,
+      required this.token});
 
   @override
   State<Account> createState() => _AccountState();
@@ -23,185 +26,124 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   late SharedPreferences prefs;
-  late String token;
-
-  void initSharedPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token')!;
-  }
+  late Duration timeLeft;
+  late DateTime now;
 
   @override
   void initState() {
-    initSharedPrefs();
+    now = DateTime.now();
+    timeLeft = calculateTimeLeft(now);
     super.initState();
-  }
-
-  Future<void> logout(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('dataSaved');
-
-    if (!context.mounted) return;
-
-    Navigator.pushReplacement(context, _createFadeRoute(const Login()));
-  }
-
-  Route _createFadeRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xFFF8F4EA),
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.20,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 30,
-                    right: 20,
-                    child: InkWell(
-                        onTap: () {
-                          logout(context);
-                        },
-                        child: const Icon(Icons.arrow_forward_ios)),
-                  ),
-                  const Center(
-                    child: Text(
-                      'Scanago',
-                      style: TextStyle(
-                        fontFamily: 'monkey',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xfff3f3f3), Color(0xffd8d8d8)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                ),
+                TopDashboardAccount(screenWidth: screenWidth),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Divider(
+                  endIndent: 15,
+                  indent: 15,
+                  color: Color(0xffcfcfcf),
+                  thickness: 1,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CaptionStyle(
+                        textColor: const Color(0xff5C5C5C),
+                        text: 'Hi $name,',
+                        fontSize: screenWidth * 0.045),
+                    CaptionStyle(
+                        textColor: const Color(0xff8C8C8C),
+                        text: 'Here are your account details',
+                        fontSize: screenWidth * 0.037),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: screenWidth,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          color: const Color(0xff222222),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '$branch',
+                                style: TextStyle(
+                                    fontFamily: 'inter',
+                                    fontSize: screenWidth * 0.08,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xff434343)),
+                              ),
+                              CaptionStyle(
+                                  textColor: const Color(0xff656565),
+                                  text: 'Unlock campus with a scan :D',
+                                  fontSize: screenWidth * 0.032)
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CaptionStyle(
+                                  textColor: const Color(0xffBABABA),
+                                  text: '# $rollNo',
+                                  fontSize: screenWidth * 0.045),
+                              CaptionStyle(
+                                  textColor: const Color(0xff8c8c8c),
+                                  text: 'Room number: $room',
+                                  fontSize: screenWidth * 0.033),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Grid(
+                      screenWidth: screenWidth,
+                      token: widget.token,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Hey ${widget.name}!',
-                    style: const TextStyle(
-                        fontFamily: 'monkey',
-                        fontSize: 40,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    'Roll Number: ${widget.rollNo}',
-                    style: const TextStyle(
-                        fontFamily: 'monkey',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    'Branch: ${widget.branch}',
-                    style: const TextStyle(
-                        fontFamily: 'monkey',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    child: Button(
-                        text: 'View Home Entry',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            _createFadeRoute(EntryList(
-                              email: widget.email,
-                              listType: 'listHomeEntry',
-                            )),
-                          );
-                        },
-                        radius: 12,
-                        fontSize: 12),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    child: Button(
-                        text: 'View Local Entry',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            _createFadeRoute(EntryList(
-                              email: widget.email,
-                              listType: 'listLocalEntry',
-                            )),
-                          );
-                        },
-                        radius: 12,
-                        fontSize: 12),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    child: Button(
-                        text: 'Update Details',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            _createFadeRoute(Details(
-                              token: token,
-                              saveType: 'update',
-                            )),
-                          );
-                        },
-                        radius: 12,
-                        fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.20,
-              child: Stack(
-                children: [
-                  Positioned(
-                      bottom: 35,
-                      left: 16,
-                      child: Image.asset(
-                        'assets/images/bottom.png',
-                        width: 120,
-                      )),
-                  Positioned(
-                      bottom: 0,
-                      right: 15,
-                      child: Image.asset(
-                        'assets/images/arrow.png',
-                        width: 220,
-                      )),
-                ],
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

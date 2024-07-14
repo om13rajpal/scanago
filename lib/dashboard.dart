@@ -117,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
                                             email: email!,
                                             name: name!,
                                             branch: branch!,
-                                            rollNo: rollNo!)));
+                                            rollNo: rollNo!, token: widget.token,)));
                                   },
                                   child: SvgPicture.asset(
                                     'assets/images/account.svg',

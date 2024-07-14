@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +13,7 @@ import 'package:scanago/templates/button.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/templates/caption_style.dart';
 import 'package:scanago/templates/textfield.dart';
+import 'package:scanago/utils/route_animation.dart';
 import 'package:scanago/utils/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,18 +76,6 @@ class _DetailsState extends State<Details> {
     }
   }
 
-  Route _createFadeRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-    );
-  }
-
   Future<void> saveData(BuildContext context) async {
     var body = {
       'email': email,
@@ -147,7 +135,7 @@ class _DetailsState extends State<Details> {
 
         Navigator.pushReplacement(
           context,
-          _createFadeRoute(Dashboard(token: token)),
+          createFadeRoute(Dashboard(token: token)),
         );
       } else {
         Fluttertoast.showToast(
@@ -210,7 +198,7 @@ class _DetailsState extends State<Details> {
 
       Navigator.pushReplacement(
         context,
-        _createFadeRoute(Dashboard(token: token)),
+        createFadeRoute(Dashboard(token: token)),
       );
     } else {
       Fluttertoast.showToast(
@@ -230,7 +218,7 @@ class _DetailsState extends State<Details> {
   TextEditingController rollNo = TextEditingController();
   TextEditingController room = TextEditingController();
   late String email;
-  late String? token;
+  late String? token = '';
   late String imagebutton = "Select Image";
 
   int? _selectedValue;
