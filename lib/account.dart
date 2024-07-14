@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/templates/caption_style.dart';
 import 'package:scanago/templates/grid_account.dart';
+import 'package:scanago/templates/time_left.dart';
 import 'package:scanago/templates/top_dashboard_account.dart';
 import 'package:scanago/utils/time_left.dart';
 import 'package:scanago/utils/user_data.dart';
@@ -17,8 +18,7 @@ class Account extends StatefulWidget {
       required this.email,
       required this.name,
       required this.branch,
-      required this.rollNo,
-      required this.token});
+      required this.rollNo, required this.token});
 
   @override
   State<Account> createState() => _AccountState();
@@ -85,52 +85,26 @@ class _AccountState extends State<Account> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: screenWidth,
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                          color: const Color(0xff222222),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '$branch',
-                                style: TextStyle(
-                                    fontFamily: 'inter',
-                                    fontSize: screenWidth * 0.08,
-                                    fontWeight: FontWeight.w700,
-                                    color: const Color(0xff434343)),
-                              ),
-                              CaptionStyle(
-                                  textColor: const Color(0xff656565),
-                                  text: 'Unlock campus with a scan :D',
-                                  fontSize: screenWidth * 0.032)
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CaptionStyle(
-                                  textColor: const Color(0xffBABABA),
-                                  text: '# $rollNo',
-                                  fontSize: screenWidth * 0.045),
-                              CaptionStyle(
-                                  textColor: const Color(0xff8c8c8c),
-                                  text: 'Room number: $room',
-                                  fontSize: screenWidth * 0.033),
-                            ],
-                          )
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CaptionStyle(
+                            textColor: const Color(0xff8C8C8C),
+                            text: 'Room number: $room',
+                            fontSize: screenWidth * 0.035),
+                        CaptionStyle(
+                            textColor: const Color(0xff727272),
+                            text: '$rollNo',
+                            fontSize: screenWidth * 0.035),
+                      ],
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                    Text(
+                      '$branch',
+                      style: TextStyle(
+                          fontFamily: 'inter',
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xff353535),
+                          fontSize: screenWidth * 0.062),
                     ),
                     Grid(
                       screenWidth: screenWidth,
@@ -138,6 +112,17 @@ class _AccountState extends State<Account> {
                     ),
                     const SizedBox(
                       height: 20,
+                    ),
+                    CaptionStyle(
+                        textColor: const Color(0xff8c8c8c),
+                        text: 'Unlock campus with a scan :D',
+                        fontSize: screenWidth * 0.03),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TimeLeft(
+                      timeLeft: timeLeft,
+                      screenWidth: screenWidth,
                     ),
                   ],
                 ),

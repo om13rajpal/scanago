@@ -38,7 +38,7 @@ class Grid extends StatelessWidget {
           bgColor: const Color(0xffE6D6AE),
           title: 'Update details',
           subtitle: 'Update your profile\ndetails',
-          svgPath: 'assets/images/moon.svg',
+          svgPath: 'assets/images/user.svg',
           page: Details(token: token, saveType: 'update'),
           screenWidth: screenWidth,
         ),
