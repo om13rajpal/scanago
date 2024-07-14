@@ -65,36 +65,6 @@ class TopDashboardAccount extends StatelessWidget {
               fontWeight: FontWeight.w700,
               color: const Color.fromARGB(255, 18, 18, 18)),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipOval(
-              child: SvgPicture.asset(
-                'assets/images/tiet.svg',
-                width: screenWidth * 0.037,
-                height: screenWidth * 0.037,
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              'TIET',
-              style: TextStyle(
-                  fontFamily: 'inter',
-                  fontSize: screenWidth * 0.033,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xff8c8c8c)),
-            ),
-            const SizedBox(
-              width: 7,
-            ),
-            SvgPicture.asset(
-              'assets/images/down.svg',
-              width: 17,
-            )
-          ],
-        )
       ],
     );
   }

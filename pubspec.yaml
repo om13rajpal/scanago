@@ -46,6 +46,7 @@ dependencies:
   http_parser: ^4.0.2
   mime: ^1.0.5
   flutter_svg: ^2.0.10+1
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
