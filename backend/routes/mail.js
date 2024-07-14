@@ -15,7 +15,7 @@ async function sendMailToUser(req, res, next) {
     from: process.env.EMAIL,
     to: endUser,
     subject: "Welcome to Scanago",
-    text: `hello ${name}\nWe welcome you to scanago`,
+    text: `hello ${name},\nWe welcome you to scanago\nHappy Scanning :D`,
   };
 
   sendMail.sendMail(mailOption, (err, data) => {
@@ -45,7 +45,7 @@ async function sendVerificationMail(req, res, next) {
     from: process.env.EMAIL,
     to: email,
     subject: "Verify your email",
-    text: `Please verify your email by clicking the following link\n${verificationUrl}`,
+    text: `Please verify your email by clicking the following link\n${verificationUrl}\nHappy Scanning :D`,
   };
 
   sendMail.sendMail(mailOptions, (err, data) => {
