@@ -28,8 +28,15 @@ class _DashboardState extends State<Dashboard> {
     now = DateTime.now();
     timeLeft = calculateTimeLeft(now);
 
-    checkVerification(email!, context);
+    checkVerification(widget.token!, context);
     super.initState();
+  }
+
+    Future<void> _refresh() async {
+    setState(() {
+      now = DateTime.now();
+      timeLeft = calculateTimeLeft(now);
+    });
   }
 
   @override
@@ -37,100 +44,106 @@ class _DashboardState extends State<Dashboard> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xfff3f3f3), Color(0xffd8d8d8)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                ),
-                TopDashboard(name: name!, screenWidth: screenWidth),
-                const SizedBox(
-                  height: 12,
-                ),
-                const Divider(
-                  endIndent: 15,
-                  indent: 15,
-                  color: Color(0xffcfcfcf),
-                  thickness: 1,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xfff3f3f3), Color(0xffd8d8d8)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    CaptionStyle(
-                        textColor: const Color(0xff8c8c8c),
-                        text: 'Here are some things you can do',
-                        fontSize: screenWidth * 0.03),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.07,
                     ),
-                    Grid(screenWidth: screenWidth),
+                    TopDashboard(name: name!, screenWidth: screenWidth),
                     const SizedBox(
-                      height: 32,
+                      height: 12,
                     ),
-                    TimeLeft(
-                      timeLeft: timeLeft,
-                      screenWidth: screenWidth,
+                    const Divider(
+                      endIndent: 15,
+                      indent: 15,
+                      color: Color(0xffcfcfcf),
+                      thickness: 1,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
-                    CaptionStyle(
-                        textColor: const Color(0xff8c8c8c),
-                        text: 'Unlock campus with a scan :D',
-                        fontSize: screenWidth * 0.03),
-                    Transform.translate(
-                      offset: const Offset(0, -20),
-                      child: SizedBox(
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            LottieBuilder.asset(
-                              'assets/lottie/dino.json',
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              fit: BoxFit.cover,
-                            ),
-                            CircleAvatar(
-                                radius: 20,
-                                backgroundColor: const Color(0xff3b3b3b),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        createFadeRoute(Account(
-                                            email: email!,
-                                            name: name!,
-                                            branch: branch!,
-                                            rollNo: rollNo!, token: widget.token,)));
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/images/account.svg',
-                                    width: 20,
-                                  ),
-                                )),
-                          ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CaptionStyle(
+                            textColor: const Color(0xff8c8c8c),
+                            text: 'Here are some things you can do',
+                            fontSize: screenWidth * 0.03),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
+                        Grid(screenWidth: screenWidth),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        TimeLeft(
+                          timeLeft: timeLeft,
+                          screenWidth: screenWidth,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CaptionStyle(
+                            textColor: const Color(0xff8c8c8c),
+                            text: 'Unlock campus with a scan :D',
+                            fontSize: screenWidth * 0.03),
+                        Transform.translate(
+                          offset: const Offset(0, -20),
+                          child: SizedBox(
+                            height: 100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                LottieBuilder.asset(
+                                  'assets/lottie/dino.json',
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  fit: BoxFit.cover,
+                                ),
+                                CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: const Color(0xff3b3b3b),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            createFadeRoute(Account(
+                                                email: email!,
+                                                name: name!,
+                                                branch: branch!,
+                                                rollNo: rollNo!, token: widget.token,)));
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/account.svg',
+                                        width: 20,
+                                      ),
+                                    )),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ),
         ),

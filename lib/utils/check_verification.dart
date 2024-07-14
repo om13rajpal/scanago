@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:scanago/utils/route_animation.dart';
+import 'package:scanago/utils/user_data.dart';
 import 'package:scanago/verify_mail.dart';
 import 'package:http/http.dart' as http;
 
-void checkVerification(String email, BuildContext context) async {
+void checkVerification(String token, BuildContext context) async {
     var body = {"email": email};
     var response = await http.post(
         Uri.parse('https://scanago.onrender.com/checkVerification'),
@@ -18,7 +19,7 @@ void checkVerification(String email, BuildContext context) async {
       if (!isVerified) {
         if (!context.mounted) return;
         Navigator.pushReplacement(
-            context, createFadeRoute(VerifyMail(email: email)));
+            context, createFadeRoute(VerifyMail(token: token)));
       }
     }
   }

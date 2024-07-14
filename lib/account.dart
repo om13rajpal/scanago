@@ -12,7 +12,7 @@ class Account extends StatefulWidget {
   final String name;
   final String branch;
   final String rollNo;
-  final String token;
+  final dynamic token;
   const Account(
       {super.key,
       required this.email,
@@ -108,7 +108,6 @@ class _AccountState extends State<Account> {
                     ),
                     Grid(
                       screenWidth: screenWidth,
-                      token: widget.token,
                     ),
                     const SizedBox(
                       height: 20,

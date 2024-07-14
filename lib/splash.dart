@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
     if (widget.isLoggedIn == 'admin') {
       nextPage = const Scan();
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved == true) {
-      setUserInfo(JwtDecoder.decode(widget.token!));
+      setUserInfo(JwtDecoder.decode(widget.token!), widget.token!);
       nextPage = Dashboard(token: widget.token);
     } else if (widget.isLoggedIn == 'yes' && widget.dataSaved != true) {
       nextPage = Details(

@@ -109,7 +109,7 @@ class _DetailsState extends State<Details> {
 
         await prefs.remove('token');
         await prefs.setString('token', jsonRes['token']);
-        setUserInfo(JwtDecoder.decode(jsonRes['token']));
+        setUserInfo(JwtDecoder.decode(jsonRes['token']), jsonRes['token']);
 
         await prefs.setBool('dataSaved', true);
         token = prefs.getString('token');
@@ -192,7 +192,7 @@ class _DetailsState extends State<Details> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
       await prefs.setString('token', jsonRes['token']);
-      setState(() {});
+      setUserInfo(JwtDecoder.decode(jsonRes['token']), jsonRes['token']);
 
       if (!context.mounted) return;
 
@@ -267,7 +267,8 @@ class _DetailsState extends State<Details> {
                 alignment: Alignment.center,
                 children: [
                   Transform.translate(
-                    offset: Offset(screenWidth * 0.25, -MediaQuery.of(context).size.height * 0.1),
+                    offset: Offset(screenWidth * 0.25,
+                        -MediaQuery.of(context).size.height * 0.1),
                     child: LottieBuilder.asset(
                       'assets/lottie/run.json',
                       width: screenWidth,

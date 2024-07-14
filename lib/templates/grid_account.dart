@@ -3,11 +3,11 @@ import 'package:lottie/lottie.dart';
 import 'package:scanago/details.dart';
 import 'package:scanago/entryList.dart';
 import 'package:scanago/templates/grid_content.dart';
+import 'package:scanago/utils/user_data.dart';
 
 class Grid extends StatelessWidget {
   final double screenWidth;
-  final dynamic token;
-  const Grid({super.key, required this.screenWidth, this.token});
+  const Grid({super.key, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {

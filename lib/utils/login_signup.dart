@@ -32,7 +32,7 @@ Future<void> loginOrSignupUser(
       var myToken = jsonRes['token'];
       await prefs.setString('token', myToken);
       await prefs.setBool('dataSaved', true);
-      setUserInfo(JwtDecoder.decode(myToken));
+      setUserInfo(JwtDecoder.decode(myToken), myToken);
 
       if (!context.mounted) return;
       bool admin = false;
