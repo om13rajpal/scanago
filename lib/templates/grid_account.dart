@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanago/details.dart';
-import 'package:scanago/entryList.dart';
+import 'package:scanago/entry_list.dart';
 import 'package:scanago/templates/gridcontent_account.dart';
 import 'package:scanago/utils/user_data.dart';
 
@@ -12,8 +12,8 @@ class Grid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 3,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
+      crossAxisSpacing: 6,
+      mainAxisSpacing: 6,
       shrinkWrap: true,
       childAspectRatio: 8 / 6.3,
       children: [
