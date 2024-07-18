@@ -56,7 +56,7 @@ class _SplashState extends State<Splash> {
         height: MediaQuery.of(context).size.height,
         color: const Color(0xff070707),
         child: Center(
-          child: Lottie.asset('assets/lottie/splash.json'),
+          child: Lottie.asset('assets/lottie/splash.json', renderCache: RenderCache.raster),
         ),
       ),
     );

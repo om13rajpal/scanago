@@ -82,6 +82,7 @@ class _LoginState extends State<Login> {
                           offset: Offset(screenWidth * 0.25, 0),
                           child: Lottie.asset(
                             'assets/lottie/man.json',
+                            renderCache: RenderCache.raster
                           ),
                         ),
                       ),

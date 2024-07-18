@@ -273,6 +273,7 @@ class _DetailsState extends State<Details> {
                           -MediaQuery.of(context).size.height * 0.1),
                       child: LottieBuilder.asset(
                         'assets/lottie/run.json',
+                        renderCache: RenderCache.raster,
                         width: screenWidth,
                       ),
                     ),

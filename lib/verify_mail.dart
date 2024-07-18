@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
 import 'package:scanago/dashboard.dart';
 import 'package:scanago/templates/button.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +41,11 @@ class _VerifyMailState extends State<VerifyMail> {
   }
 
   Future<void> _refresh() async {
-    Navigator.pushReplacement(context, createFadeRoute(Dashboard(token: widget.token,)));
+    Navigator.pushReplacement(
+        context,
+        createFadeRoute(Dashboard(
+          token: widget.token,
+        )));
   }
 
   @override
@@ -63,86 +66,82 @@ class _VerifyMailState extends State<VerifyMail> {
               ),
             ),
             padding: const EdgeInsets.only(left: 25, right: 25),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Positioned(
-                          top: 50,
-                          right: 20,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  logout(context);
-                                },
-                                child: SvgPicture.asset(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                  'assets/images/logout-light.svg',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                            top: 100,
-                            child: Text(
-                              'Scanago',
-                              style: TextStyle(
-                                  fontFamily: 'inter',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.08,
-                                  color: const Color(0xff202020)),
-                            )),
-                        LottieBuilder.asset('assets/lottie/man.json'),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.20,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Your email is not verified Please verify your mail',
-                              style: TextStyle(
-                                  fontFamily: 'inter',
-                                  color: const Color(0xff202020),
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                  fontWeight: FontWeight.w500),
-                              textAlign: TextAlign.center,
+                            InkWell(
+                              onTap: () {
+                                logout(context);
+                              },
+                              child: SvgPicture.asset(
+                                width: MediaQuery.of(context).size.width * 0.05,
+                                'assets/images/logout-light.svg',
+                              ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Button(
-                                text: 'Resend Verification Mail',
-                                onPressed: () {
-                                  sendVerificationMail();
-                                },
-                                radius: 12,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.032)
                           ],
                         ),
-                        Positioned(
-                            bottom: 0,
-                            right: 15,
-                            child: SvgPicture.asset(
-                              'assets/images/arrow.svg',
-                              width: MediaQuery.of(context).size.width * 0.6,
-                            ))
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Scanago',
+                        style: TextStyle(
+                            fontFamily: 'inter',
+                            fontWeight: FontWeight.w700,
+                            fontSize: MediaQuery.of(context).size.width * 0.08,
+                            color: const Color(0xff202020)),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.60,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Your email is not verified. Please verify your mail',
+                          style: TextStyle(
+                              fontFamily: 'inter',
+                              color: const Color(0xff202020),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.05,
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 10),
+                        Button(
+                            text: 'Resend Verification Mail',
+                            onPressed: () {
+                              sendVerificationMail();
+                            },
+                            radius: 12,
+                            fontSize: MediaQuery.of(context).size.width * 0.032)
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.20,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: SvgPicture.asset(
+                      'assets/images/arrow.svg',
+                      width: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

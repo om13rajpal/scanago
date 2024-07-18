@@ -16,6 +16,7 @@ class TimeLeft extends StatelessWidget {
           backgroundColor: const Color(0xff202020),
           child: LottieBuilder.asset(
             'assets/lottie/clock.json',
+            renderCache: RenderCache.raster,
           ),
         ),
         Expanded(

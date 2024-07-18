@@ -80,9 +80,8 @@ class _SignUpState extends State<SignUp> {
                         alignment: Alignment.centerRight,
                         child: Transform.translate(
                           offset: Offset(screenWidth * 0.25, 0),
-                          child: Lottie.asset(
-                            'assets/lottie/man.json',
-                          ),
+                          child: Lottie.asset('assets/lottie/man.json',
+                              renderCache: RenderCache.raster),
                         ),
                       ),
                       Padding(

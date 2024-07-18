@@ -65,7 +65,8 @@ class _QrCodeState extends State<QrCodeView> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  LottieBuilder.asset('assets/lottie/run.json'),
+                  LottieBuilder.asset('assets/lottie/run.json',
+                  renderCache: RenderCache.raster,),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 0.65,
                       child: Column(

@@ -114,6 +114,7 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 LottieBuilder.asset(
                                   'assets/lottie/dino.json',
+                                  renderCache: RenderCache.raster,
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   fit: BoxFit.cover,
                                 ),

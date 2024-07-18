@@ -47,7 +47,9 @@ class _ScanagoState extends State<Scanago> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity,),
+      theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: (loggedIn)
           ? (email == 'admin@gmail.com')
               ? Splash(isLoggedIn: 'admin', token: widget.token)
