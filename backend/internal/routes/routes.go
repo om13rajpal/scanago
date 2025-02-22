@@ -6,7 +6,10 @@ import (
 )
 
 func SetupRoutes() *gin.Engine{
+	gin.SetMode(gin.ReleaseMode)
+
 	router := gin.Default()
+	router.SetTrustedProxies(nil)
 	router.GET("/", handlers.HandleHome)
 	return router
 }
