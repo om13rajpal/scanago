@@ -11,5 +11,7 @@ func SetupRoutes() *gin.Engine{
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 	router.GET("/", handlers.HandleHome)
+	router.POST("/signup", handlers.Signup)
+	
 	return router
 }
