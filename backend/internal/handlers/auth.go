@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -53,7 +54,11 @@ func Signup(c *gin.Context) {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"status": false, "error": err.Error()})
 		return
 	}
-
+	err = pkg.SendMail(user.Email, "Welcome to Scanago", "Welcome to Scanago, your account has been created successfully.")
+	if err != nil {
+		fmt.Println("Error sending email")
+	}
+	
 	c.IndentedJSON(http.StatusOK, gin.H{"status": true, "message": "User created successfully", "data": result, "token": token})
 
 }
